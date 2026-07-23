@@ -100,21 +100,7 @@
     font-size: 9pt;
     line-height: 1.4;
     margin: 0;
-    padding: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-
-  .terminal {
-    max-width: 190mm;
-    width: 100%;
-    border: 1.5px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-    background: var(--bg);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    padding: 0;
   }
 
   .titlebar {
@@ -177,17 +163,6 @@
   .screen {
     padding: 14px 18px 10px;
   }
-
-  .top-border {
-    color: var(--border-light);
-    font-size: 7pt;
-    letter-spacing: 1px;
-    text-align: center;
-    margin-bottom: 10px;
-    opacity: 0.6;
-  }
-
-  .top-border span { color: var(--blue); opacity: 1; }
 
   header {
     text-align: center;
@@ -316,17 +291,7 @@
     letter-spacing: 0.3px;
   }
 
-  .bottom-border {
-    color: var(--border-light);
-    font-size: 7pt;
-    text-align: center;
-    margin-top: 8px;
-    padding-top: 6px;
-    border-top: 1px solid var(--border);
-    opacity: 0.5;
-  }
-
-  .bottom-border span { color: var(--green); opacity: 1; }
+  
 
   @media print {
     body {
@@ -335,14 +300,9 @@
       font-size: var(--print-fs);
     }
 
-    .terminal {
-      max-width: 100%;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
-    }
+    
 
-    .titlebar, .top-border, .bottom-border { display: none; }
+    .titlebar { display: none; }
 
     .screen {
       padding: 0;
@@ -374,7 +334,7 @@
 </head>
 <body>
 
-<div class="terminal" id="terminal">
+<div id="terminal">
   <div class="titlebar">
     <div class="tabs">
       <div class="tab active" data-lang="ru">[ RU ]</div>
@@ -385,10 +345,8 @@
   </div>
 
   <div class="screen">
-    <div class="top-border">┌── <span>amir1330/cv</span> ───────────────────────────────────────┐</div>
-
     <header>
-      <h1>АМИР ИСКАКОВ</h1>
+      <h1 id="js-name">АМИР ИСКАКОВ</h1>
       <div class="subtitle" id="js-subtitle">Software Engineer • Junior DevOps Engineer • Linux System Administrator</div>
       <div class="contact" id="js-contact">
         Казахстан &nbsp;│&nbsp;
@@ -464,14 +422,13 @@
         Ищу позицию начального уровня (entry-level) в качестве Software Engineer, Junior DevOps Engineer или Linux System Administrator, где смогу внести вклад в разработку надежного ПО и инфраструктуры, одновременно расширяя свой опыт в автоматизации, облачных технологиях и современных практиках DevOps.
       </p>
     </div>
-
-    <div class="bottom-border">└── <span>~ cv</span> ───────────────────────────────────────┘</div>
   </div>
 </div>
 
 <script>
   const data = {
     ru: {
+      name: "АМИР ИСКАКОВ",
       subtitle: "Software Engineer • Junior DevOps Engineer • Linux System Administrator",
       summary: "Выпускник Astana IT University по специальности Software Engineering с прочной базой в Linux-системном администрировании, сетевых технологиях, автоматизации и разработке ПО. Увлечен DevOps, облачными технологиями, автоматизацией инфраструктуры и CI/CD. Имею опыт работы в Linux-средах и использования инструментов AI-assisted разработки для ускорения отладки, повышения продуктивности и оптимизации инженерных процессов. Обладаю сильными аналитическими способностями, навыками поиска неисправностей (troubleshooting) и нацелен на постоянное обучение.",
       edu: '<strong>Astana IT University</strong><br>Бакалавр в области Software Engineering',
@@ -497,6 +454,7 @@
       obj: "Ищу позицию начального уровня (entry-level) в качестве Software Engineer, Junior DevOps Engineer или Linux System Administrator, где смогу внести вклад в разработку надежного ПО и инфраструктуры, одновременно расширяя свой опыт в автоматизации, облачных технологиях и современных практиках DevOps."
     },
     kz: {
+      name: "АМИР ИСКАКОВ",
       subtitle: "Software Engineer • Junior DevOps Engineer • Linux жүйелік әкімшісі",
       summary: "Astana IT University-ді Software Engineering мамандығы бойынша бітірген, Linux жүйелік әкімшілігі, желілік технологиялар, автоматтандыру және бағдарламалық жасақтама әзірлеу салаларында берік негізі бар түлек. DevOps, бұлтты технологиялар, инфрақұрылымды автоматтандыру және CI/CD-ге қызығушылық танытады. Linux орталарында және AI-assisted әзірлеу құралдарын қолдануда тәжірибесі бар. Күшті аналитикалық қабілеттерге, ақаулықтарды жою дағдыларына ие және үздіксіз оқуға бағытталған.",
       edu: '<strong>Astana IT University</strong><br>Software Engineering бакалавры',
@@ -522,6 +480,7 @@
       obj: "Software Engineer, Junior DevOps Engineer немесе Linux жүйелік әкімшісі ретінде бастапқы деңгейдегі лауазым іздеймін, онда сенімді бағдарламалық жасақтама мен инфрақұрылымды әзірлеуге үлес қоса аламын және автоматтандыру, бұлтты технологиялар мен заманауи DevOps тәжірибелеріндегі тәжірибемді кеңейте аламын."
     },
     en: {
+      name: "ISKAKOV AMIR",
       subtitle: "Software Engineer • Junior DevOps Engineer • Linux System Administrator",
       summary: "A graduate of Astana IT University with a degree in Software Engineering, possessing a strong foundation in Linux system administration, networking, automation, and software development. Passionate about DevOps, cloud technologies, infrastructure automation, and CI/CD. Experienced in Linux environments and AI-assisted development tools for debugging, productivity enhancement, and engineering optimization. Strong analytical and troubleshooting skills with a commitment to continuous learning.",
       edu: '<strong>Astana IT University</strong><br>Bachelor\'s degree in Software Engineering',
@@ -563,6 +522,7 @@
 
   function renderLang(lang) {
     const d = data[lang];
+    document.getElementById('js-name').textContent = d.name;
     document.getElementById('js-subtitle').textContent = d.subtitle;
     document.getElementById('js-summary').textContent = d.summary;
     document.getElementById('js-edu').innerHTML = d.edu;
@@ -589,7 +549,7 @@
   });
 
   function toggleTheme() {
-    const t = document.getElementById('terminal');
+    const t = document.body;
     const btn = document.getElementById('themeToggle');
     if (t.classList.contains('light')) {
       t.classList.remove('light');
@@ -606,7 +566,7 @@
 
   const mq = window.matchMedia('(prefers-color-scheme: light)');
   if (mq.matches) {
-    document.getElementById('terminal').classList.add('light');
+    document.body.classList.add('light');
   }
 
   renderLang('ru');
