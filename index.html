@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amir Iskakov — CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --bg: #282828;
+    --bg-soft: #1d2021;
+    --fg: #ebdbb2;
+    --fg-dim: #a89984;
+    --fg-dark: #3c3836;
+    --blue: #83a598;
+    --green: #b8bb26;
+    --yellow: #fabd2f;
+    --red: #fb4934;
+    --orange: #fe8019;
+    --aqua: #8ec07c;
+    --border: #504945;
+    --border-light: #665c54;
+    --tab-bg: #3c3836;
+    --tab-hover: #504945;
+    --tab-active: #504945;
+    --print-fs: 8.5pt;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #fbf1c7;
+      --bg-soft: #f9f5d7;
+      --fg: #3c3836;
+      --fg-dim: #7c6f64;
+      --fg-dark: #282828;
+      --blue: #458588;
+      --green: #98971a;
+      --yellow: #d79921;
+      --red: #cc241d;
+      --orange: #d65d0e;
+      --aqua: #689d6a;
+      --border: #d5c4a1;
+      --border-light: #bdae93;
+      --tab-bg: #ebdbb2;
+      --tab-hover: #d5c4a1;
+      --tab-active: #d5c4a1;
+    }
+  }
+
+  .light {
+    --bg: #fbf1c7;
+    --bg-soft: #f9f5d7;
+    --fg: #3c3836;
+    --fg-dim: #7c6f64;
+    --fg-dark: #282828;
+    --blue: #458588;
+    --green: #98971a;
+    --yellow: #d79921;
+    --red: #cc241d;
+    --orange: #d65d0e;
+    --aqua: #689d6a;
+    --border: #d5c4a1;
+    --border-light: #bdae93;
+    --tab-bg: #ebdbb2;
+    --tab-hover: #d5c4a1;
+    --tab-active: #d5c4a1;
+  }
+
+  .dark {
+    --bg: #282828;
+    --bg-soft: #1d2021;
+    --fg: #ebdbb2;
+    --fg-dim: #a89984;
+    --fg-dark: #3c3836;
+    --blue: #83a598;
+    --green: #b8bb26;
+    --yellow: #fabd2f;
+    --red: #fb4934;
+    --orange: #fe8019;
+    --aqua: #8ec07c;
+    --border: #504945;
+    --border-light: #665c54;
+    --tab-bg: #3c3836;
+    --tab-hover: #504945;
+    --tab-active: #504945;
+  }
+
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  body {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    font-size: 9pt;
+    line-height: 1.4;
+    margin: 0;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .terminal {
+    max-width: 190mm;
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-soft);
+    border-bottom: 1.5px solid var(--border);
+    padding: 6px 12px;
+    user-select: none;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 2px;
+  }
+
+  .tab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt;
+    font-weight: 500;
+    padding: 4px 12px;
+    cursor: pointer;
+    color: var(--fg-dim);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.15s;
+    letter-spacing: 0.5px;
+  }
+
+  .tab:hover {
+    color: var(--fg);
+    background: var(--tab-hover);
+  }
+
+  .tab.active {
+    color: var(--green);
+    background: var(--tab-active);
+    border-color: var(--border);
+  }
+
+  .theme-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10pt;
+    cursor: pointer;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--yellow);
+    transition: all 0.15s;
+    line-height: 1;
+  }
+
+  .theme-toggle:hover {
+    background: var(--tab-hover);
+  }
+
+  .screen {
+    padding: 14px 18px 10px;
+  }
+
+  .top-border {
+    color: var(--border-light);
+    font-size: 7pt;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 10px;
+    opacity: 0.6;
+  }
+
+  .top-border span { color: var(--blue); opacity: 1; }
+
+  header {
+    text-align: center;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  h1 {
+    font-size: 17pt;
+    color: var(--fg);
+    margin: 0 0 1px 0;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .subtitle {
+    font-size: 8pt;
+    color: var(--blue);
+    font-weight: 500;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  .contact {
+    font-size: 7.5pt;
+    color: var(--fg-dim);
+  }
+
+  .contact a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .contact a:hover { text-decoration: underline; }
+
+  .section {
+    margin-top: 8px;
+  }
+
+  .section-header {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .section-header::before {
+    content: "─── ";
+    color: var(--border-light);
+    font-weight: 400;
+  }
+
+  .section-header::after {
+    content: " ───";
+    color: var(--border-light);
+    font-weight: 400;
+  }
+
+  .section p {
+    margin: 0 0 5px 0;
+    text-align: justify;
+    font-size: 8.5pt;
+  }
+
+  .skills-grid {
+    display: flex;
+    gap: 8px;
+  }
+
+  .skills-col {
+    flex: 1;
+  }
+
+  .skill-line {
+    font-size: 8.5pt;
+    margin-bottom: 4px;
+    line-height: 1.35;
+  }
+
+  .skill-line .prefix {
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .skill-line .label {
+    color: var(--fg);
+    font-weight: 700;
+  }
+
+  .skill-line .value {
+    color: var(--fg-dim);
+  }
+
+  .two-col {
+    display: flex;
+    gap: 8px;
+  }
+
+  .two-col > div {
+    flex: 1;
+  }
+
+  .two-col ul {
+    margin: 0;
+    padding-left: 14px;
+    font-size: 8.5pt;
+  }
+
+  .two-col li {
+    margin-bottom: 1px;
+    color: var(--fg);
+  }
+
+  .two-col h3 {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: var(--yellow);
+    margin: 0 0 3px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .bottom-border {
+    color: var(--border-light);
+    font-size: 7pt;
+    text-align: center;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+    opacity: 0.5;
+  }
+
+  .bottom-border span { color: var(--green); opacity: 1; }
+
+  @media print {
+    body {
+      background: var(--bg);
+      padding: 0;
+      font-size: var(--print-fs);
+    }
+
+    .terminal {
+      max-width: 100%;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .titlebar, .top-border, .bottom-border { display: none; }
+
+    .screen {
+      padding: 0;
+    }
+
+    header {
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 { font-size: 15pt; }
+    .subtitle { font-size: 7.5pt; }
+    .contact { font-size: 7pt; }
+    .section { margin-top: 6px; }
+    .section-header { font-size: 8pt; }
+    .section-header::before { content: ""; }
+    .section-header::after { content: ""; }
+    .section p { font-size: var(--print-fs); margin: 0 0 4px 0; }
+    .skill-line { font-size: var(--print-fs); margin-bottom: 3px; }
+    .two-col ul { font-size: var(--print-fs); }
+    .two-col h3 { font-size: var(--print-fs); }
+
+    .section { page-break-inside: avoid; }
+    header { page-break-after: avoid; }
+    * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="terminal" id="terminal">
+  <div class="titlebar">
+    <div class="tabs">
+      <div class="tab active" data-lang="ru">[ RU ]</div>
+      <div class="tab" data-lang="kz">[ KZ ]</div>
+      <div class="tab" data-lang="en">[ EN ]</div>
+    </div>
+    <div class="theme-toggle" id="themeToggle" title="Toggle theme">~</div>
+  </div>
+
+  <div class="screen">
+    <div class="top-border">┌── <span>amir1330/cv</span> ───────────────────────────────────────┐</div>
+
+    <header>
+      <h1>АМИР ИСКАКОВ</h1>
+      <div class="subtitle" id="js-subtitle">Software Engineer • Junior DevOps Engineer • Linux System Administrator</div>
+      <div class="contact" id="js-contact">
+        Казахстан &nbsp;│&nbsp;
+        <a href="mailto:iskakovamir7486@gmail.com">iskakovamir7486@gmail.com</a> &nbsp;│&nbsp;
+        <a href="https://github.com/amir1330" target="_blank">github.com/amir1330</a> &nbsp;│&nbsp;
+        <a href="https://www.linkedin.com/in/amir-iskakov-360951331" target="_blank">linkedin.com/in/amir-iskakov-360951331</a>
+      </div>
+    </header>
+
+    <div class="section">
+      <div class="section-header" id="js-summary-h">Профессиональное резюме</div>
+      <p id="js-summary">
+        Выпускник Astana IT University по специальности Software Engineering с прочной базой в Linux-системном администрировании, сетевых технологиях, автоматизации и разработке ПО. Увлечен DevOps, облачными технологиями, автоматизацией инфраструктуры и CI/CD. Имею опыт работы в Linux-средах и использования инструментов AI-assisted разработки для ускорения отладки, повышения продуктивности и оптимизации инженерных процессов. Обладаю сильными аналитическими способностями, навыками поиска неисправностей (troubleshooting) и нацелен на постоянное обучение.
+      </p>
+    </div>
+
+    <div class="section">
+      <div class="section-header" id="js-edu-h">Образование</div>
+      <p id="js-edu">
+        <strong>Astana IT University</strong><br>
+        Бакалавр в области Software Engineering
+      </p>
+    </div>
+
+    <div class="section">
+      <div class="section-header" id="js-skills-h">Технические навыки</div>
+      <div class="skills-grid" id="js-skills">
+        <div class="skills-col">
+          <div class="skill-line"><span class="prefix">├─ </span><span class="label">ОС</span><span class="value"> Linux (Arch, Ubuntu, Fedora, Debian), Windows</span></div>
+          <div class="skill-line"><span class="prefix">├─ </span><span class="label">Языки</span><span class="value"> Python, Bash, Rust, SQL</span></div>
+          <div class="skill-line"><span class="prefix">├─ </span><span class="label">VCS</span><span class="value"> Git, GitHub</span></div>
+          <div class="skill-line"><span class="prefix">└─ </span><span class="label">БД</span><span class="value"> PostgreSQL, MySQL</span></div>
+        </div>
+        <div class="skills-col">
+          <div class="skill-line"><span class="prefix">├─ </span><span class="label">DevOps</span><span class="value"> Linux Admin, Bash, SSH, Systemd, Log Analysis</span></div>
+          <div class="skill-line"><span class="prefix">├─ </span><span class="label">Контейнеры</span><span class="value"> Docker, Docker Compose</span></div>
+          <div class="skill-line"><span class="prefix">├─ </span><span class="label">Сети</span><span class="value"> TCP/IP, DNS, DHCP, HTTP/HTTPS</span></div>
+          <div class="skill-line"><span class="prefix">├─ </span><span class="label">AI</span><span class="value"> AI-Assisted Dev, Prompt Engineering, Code Gen</span></div>
+          <div class="skill-line"><span class="prefix">└─ </span><span class="label">Концепции</span><span class="value"> CI/CD, Automation, IaC (Basic), Monitoring</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="two-col">
+        <div>
+          <h3 id="js-soft-h">Личные качества</h3>
+          <ul id="js-soft">
+            <li>Решение сложных задач</li>
+            <li>Аналитическое мышление</li>
+            <li>Быстрая обучаемость</li>
+            <li>Командное взаимодействие</li>
+            <li>Коммуникабельность</li>
+            <li>Адаптивность</li>
+            <li>Внимание к деталям</li>
+            <li>Тайм-менеджмент</li>
+          </ul>
+        </div>
+        <div>
+          <h3 id="js-lang-h">Языки</h3>
+          <ul id="js-lang">
+            <li>Казахский — Родной (Native)</li>
+            <li>Русский — Родной (Native)</li>
+            <li>Английский — Professional Working Proficiency</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" id="js-obj-h">Цель (Career Objective)</div>
+      <p id="js-obj">
+        Ищу позицию начального уровня (entry-level) в качестве Software Engineer, Junior DevOps Engineer или Linux System Administrator, где смогу внести вклад в разработку надежного ПО и инфраструктуры, одновременно расширяя свой опыт в автоматизации, облачных технологиях и современных практиках DevOps.
+      </p>
+    </div>
+
+    <div class="bottom-border">└── <span>~ cv</span> ───────────────────────────────────────┘</div>
+  </div>
+</div>
+
+<script>
+  const data = {
+    ru: {
+      subtitle: "Software Engineer • Junior DevOps Engineer • Linux System Administrator",
+      summary: "Выпускник Astana IT University по специальности Software Engineering с прочной базой в Linux-системном администрировании, сетевых технологиях, автоматизации и разработке ПО. Увлечен DevOps, облачными технологиями, автоматизацией инфраструктуры и CI/CD. Имею опыт работы в Linux-средах и использования инструментов AI-assisted разработки для ускорения отладки, повышения продуктивности и оптимизации инженерных процессов. Обладаю сильными аналитическими способностями, навыками поиска неисправностей (troubleshooting) и нацелен на постоянное обучение.",
+      edu: '<strong>Astana IT University</strong><br>Бакалавр в области Software Engineering',
+      skills: [
+        ['├─ ', 'ОС', ' Linux (Arch, Ubuntu, Fedora, Debian), Windows'],
+        ['├─ ', 'Языки', ' Python, Bash, Rust, SQL'],
+        ['├─ ', 'VCS', ' Git, GitHub'],
+        ['└─ ', 'БД', ' PostgreSQL, MySQL'],
+        ['├─ ', 'DevOps', ' Linux Admin, Bash, SSH, Systemd, Log Analysis'],
+        ['├─ ', 'Контейнеры', ' Docker, Docker Compose'],
+        ['├─ ', 'Сети', ' TCP/IP, DNS, DHCP, HTTP/HTTPS'],
+        ['├─ ', 'AI', ' AI-Assisted Dev, Prompt Engineering, Code Gen'],
+        ['└─ ', 'Концепции', ' CI/CD, Automation, IaC (Basic), Monitoring']
+      ],
+      summaryH: "Профессиональное резюме",
+      eduH: "Образование",
+      skillsH: "Технические навыки",
+      softH: "Личные качества",
+      soft: ["Решение сложных задач", "Аналитическое мышление", "Быстрая обучаемость", "Командное взаимодействие", "Коммуникабельность", "Адаптивность", "Внимание к деталям", "Тайм-менеджмент"],
+      langH: "Языки",
+      lang: ["Казахский — Родной (Native)", "Русский — Родной (Native)", "Английский — Professional Working Proficiency"],
+      objH: "Цель (Career Objective)",
+      obj: "Ищу позицию начального уровня (entry-level) в качестве Software Engineer, Junior DevOps Engineer или Linux System Administrator, где смогу внести вклад в разработку надежного ПО и инфраструктуры, одновременно расширяя свой опыт в автоматизации, облачных технологиях и современных практиках DevOps."
+    },
+    kz: {
+      subtitle: "Software Engineer • Junior DevOps Engineer • Linux жүйелік әкімшісі",
+      summary: "Astana IT University-ді Software Engineering мамандығы бойынша бітірген, Linux жүйелік әкімшілігі, желілік технологиялар, автоматтандыру және бағдарламалық жасақтама әзірлеу салаларында берік негізі бар түлек. DevOps, бұлтты технологиялар, инфрақұрылымды автоматтандыру және CI/CD-ге қызығушылық танытады. Linux орталарында және AI-assisted әзірлеу құралдарын қолдануда тәжірибесі бар. Күшті аналитикалық қабілеттерге, ақаулықтарды жою дағдыларына ие және үздіксіз оқуға бағытталған.",
+      edu: '<strong>Astana IT University</strong><br>Software Engineering бакалавры',
+      skills: [
+        ['├─ ', 'ОЖ', ' Linux (Arch, Ubuntu, Fedora, Debian), Windows'],
+        ['├─ ', 'Бағдарламалау', ' Python, Bash, Rust, SQL'],
+        ['├─ ', 'VCS', ' Git, GitHub'],
+        ['└─ ', 'ДҚ', ' PostgreSQL, MySQL'],
+        ['├─ ', 'DevOps', ' Linux Admin, Bash, SSH, Systemd, Log Analysis'],
+        ['├─ ', 'Контейнерлер', ' Docker, Docker Compose'],
+        ['├─ ', 'Желілер', ' TCP/IP, DNS, DHCP, HTTP/HTTPS'],
+        ['├─ ', 'AI', ' AI-Assisted Dev, Prompt Engineering, Code Gen'],
+        ['└─ ', 'Концепциялар', ' CI/CD, Automation, IaC (Basic), Monitoring']
+      ],
+      summaryH: "Кәсіби түйіндеме",
+      eduH: "Білім",
+      skillsH: "Техникалық дағдылар",
+      softH: "Жеке қасиеттер",
+      soft: ["Күрделі мәселелерді шешу", "Аналитикалық ойлау", "Тез үйрену қабілеті", "Командалық жұмыс", "Қарым-қатынас дағдылары", "Бейімделгіштік", "Толықтыққа мұқияттылық", "Уақытты басқару"],
+      langH: "Тілдер",
+      lang: ["Қазақ — Ана тілі", "Орыс — Ана тілі", "Ағылшын — Professional Working Proficiency"],
+      objH: "Мақсат (Career Objective)",
+      obj: "Software Engineer, Junior DevOps Engineer немесе Linux жүйелік әкімшісі ретінде бастапқы деңгейдегі лауазым іздеймін, онда сенімді бағдарламалық жасақтама мен инфрақұрылымды әзірлеуге үлес қоса аламын және автоматтандыру, бұлтты технологиялар мен заманауи DevOps тәжірибелеріндегі тәжірибемді кеңейте аламын."
+    },
+    en: {
+      subtitle: "Software Engineer • Junior DevOps Engineer • Linux System Administrator",
+      summary: "A graduate of Astana IT University with a degree in Software Engineering, possessing a strong foundation in Linux system administration, networking, automation, and software development. Passionate about DevOps, cloud technologies, infrastructure automation, and CI/CD. Experienced in Linux environments and AI-assisted development tools for debugging, productivity enhancement, and engineering optimization. Strong analytical and troubleshooting skills with a commitment to continuous learning.",
+      edu: '<strong>Astana IT University</strong><br>Bachelor\'s degree in Software Engineering',
+      skills: [
+        ['├─ ', 'OS', ' Linux (Arch, Ubuntu, Fedora, Debian), Windows'],
+        ['├─ ', 'Languages', ' Python, Bash, Rust, SQL'],
+        ['├─ ', 'VCS', ' Git, GitHub'],
+        ['└─ ', 'DB', ' PostgreSQL, MySQL'],
+        ['├─ ', 'DevOps', ' Linux Admin, Bash, SSH, Systemd, Log Analysis'],
+        ['├─ ', 'Containers', ' Docker, Docker Compose'],
+        ['├─ ', 'Networking', ' TCP/IP, DNS, DHCP, HTTP/HTTPS'],
+        ['├─ ', 'AI', ' AI-Assisted Dev, Prompt Engineering, Code Gen'],
+        ['└─ ', 'Concepts', ' CI/CD, Automation, IaC (Basic), Monitoring']
+      ],
+      summaryH: "Professional Summary",
+      eduH: "Education",
+      skillsH: "Technical Skills",
+      softH: "Soft Skills",
+      soft: ["Problem Solving", "Analytical Thinking", "Quick Learning", "Team Collaboration", "Communication", "Adaptability", "Attention to Detail", "Time Management"],
+      langH: "Languages",
+      lang: ["Kazakh — Native", "Russian — Native", "English — Professional Working Proficiency"],
+      objH: "Career Objective",
+      obj: "Seeking an entry-level position as a Software Engineer, Junior DevOps Engineer, or Linux System Administrator, where I can contribute to building reliable software and infrastructure while expanding my experience in automation, cloud technologies, and modern DevOps practices."
+    }
+  };
+
+  let currentLang = 'ru';
+
+  function renderSkills(skills) {
+    const mid = Math.ceil(skills.length / 2);
+    const left = skills.slice(0, mid);
+    const right = skills.slice(mid);
+    return '<div class="skills-col">' + left.map(s =>
+      '<div class="skill-line"><span class="prefix">' + s[0] + '</span><span class="label">' + s[1] + '</span><span class="value">' + s[2] + '</span></div>'
+    ).join('') + '</div><div class="skills-col">' + right.map(s =>
+      '<div class="skill-line"><span class="prefix">' + s[0] + '</span><span class="label">' + s[1] + '</span><span class="value">' + s[2] + '</span></div>'
+    ).join('') + '</div>';
+  }
+
+  function renderLang(lang) {
+    const d = data[lang];
+    document.getElementById('js-subtitle').textContent = d.subtitle;
+    document.getElementById('js-summary').textContent = d.summary;
+    document.getElementById('js-edu').innerHTML = d.edu;
+    document.getElementById('js-skills').innerHTML = renderSkills(d.skills);
+    document.getElementById('js-summary-h').textContent = d.summaryH;
+    document.getElementById('js-edu-h').textContent = d.eduH;
+    document.getElementById('js-skills-h').textContent = d.skillsH;
+    document.getElementById('js-soft-h').textContent = d.softH;
+    document.getElementById('js-soft').innerHTML = d.soft.map(s => '<li>' + s + '</li>').join('');
+    document.getElementById('js-lang-h').textContent = d.langH;
+    document.getElementById('js-lang').innerHTML = d.lang.map(s => '<li>' + s + '</li>').join('');
+    document.getElementById('js-obj-h').textContent = d.objH;
+    document.getElementById('js-obj').textContent = d.obj;
+    document.title = 'Amir Iskakov — CV (' + lang.toUpperCase() + ')';
+  }
+
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      currentLang = this.dataset.lang;
+      renderLang(currentLang);
+    });
+  });
+
+  function toggleTheme() {
+    const t = document.getElementById('terminal');
+    const btn = document.getElementById('themeToggle');
+    if (t.classList.contains('light')) {
+      t.classList.remove('light');
+      t.classList.add('dark');
+      btn.textContent = '~';
+    } else {
+      t.classList.remove('dark');
+      t.classList.add('light');
+      btn.textContent = '~';
+    }
+  }
+
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+  const mq = window.matchMedia('(prefers-color-scheme: light)');
+  if (mq.matches) {
+    document.getElementById('terminal').classList.add('light');
+  }
+
+  renderLang('ru');
+</script>
+
+</body>
+</html>
