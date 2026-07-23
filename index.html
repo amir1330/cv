@@ -296,7 +296,29 @@
     letter-spacing: 0.3px;
   }
 
-  
+  .work-item, .project-item {
+    margin-bottom: 5px;
+  }
+  .work-title {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: var(--fg);
+    margin-bottom: 1px;
+  }
+  .work-tech {
+    font-size: 7.5pt;
+    color: var(--fg-dim);
+    margin-bottom: 2px;
+  }
+  .work-item ul, .project-item ul {
+    margin: 0;
+    padding-left: 14px;
+    font-size: 8.5pt;
+  }
+  .work-item li, .project-item li {
+    margin-bottom: 1px;
+    color: var(--fg);
+  }
 
   @media print {
     body, body.light, body.dark {
@@ -346,6 +368,9 @@
     .skill-line .prefix { color: #000000; }
     .two-col ul { font-size: var(--print-fs); }
     .two-col h3 { font-size: var(--print-fs); color: #000000; }
+    .work-item ul, .project-item ul { font-size: var(--print-fs); }
+    .work-title { font-size: var(--print-fs); }
+    .work-tech { font-size: 7pt; }
 
     .hints { display: none; }
 
@@ -402,6 +427,16 @@
         <strong>Astana IT University</strong><br>
         Бакалавр в области Software Engineering
       </p>
+    </div>
+
+    <div class="section">
+      <div class="section-header" id="js-work-h">Опыт работы</div>
+      <div id="js-work"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" id="js-projects-h">Проекты</div>
+      <div id="js-projects"></div>
     </div>
 
     <div class="section">
@@ -464,19 +499,58 @@
   const data = {
     ru: {
       name: "АМИР ИСКАКОВ",
-      subtitle: "Software Engineer • Junior DevOps Engineer • Linux System Administrator",
-      summary: "Выпускник Astana IT University по специальности Software Engineering с прочной базой в Linux-системном администрировании, сетевых технологиях, автоматизации и разработке ПО. Увлечен DevOps, облачными технологиями, автоматизацией инфраструктуры и CI/CD. Имею опыт работы в Linux-средах и использования инструментов AI-assisted разработки для ускорения отладки, повышения продуктивности и оптимизации инженерных процессов. Обладаю сильными аналитическими способностями, навыками поиска неисправностей (troubleshooting) и нацелен на постоянное обучение.",
+      subtitle: "Linux System Administrator • Junior DevOps Engineer",
+      summary: "Практикующий Linux-инженер и автоматизатор. Разработал kiosk-систему на Debian/Sway с нуля — Bash-скрипты для автоматической установки, systemd-сервисы для отказоустойчивости, полное устранение лишнего ПО. Работал с Active Directory, Docker, Prometheus, Grafana. Цель — рост в DevOps и инфраструктурной инженерии.",
       edu: '<strong>Astana IT University</strong><br>Бакалавр в области Software Engineering',
+      workH: "Опыт работы",
+      work: [
+        {
+          title: "Kiosk System Engineer",
+          tech: "Bash · systemd · Debian · Sway",
+          items: [
+            "Разработал минимальную kiosk-систему на Debian/Sway с нуля",
+            "Написал Bash-скрипты для автоматической установки и конфигурации системы",
+            "Настроил systemd-сервисы для автозапуска браузера и восстановления после сбоев",
+            "Устранил десктоп-окружение — только браузер в киоск-режиме с флагами безопасности"
+          ]
+        },
+        {
+          title: "System Administrator (практика) — NROC, Онкологический центр, Астана",
+          tech: "Active Directory · Windows · PC support",
+          items: [
+            "Обслуживал Active Directory, настраивал принтеры и рабочие станции",
+            "Собирал и поддерживал парк ПК"
+          ]
+        },
+        {
+          title: "Практика — X2POS",
+          tech: "POS · Business software",
+          items: [
+            "Работал с POS-решением для учёта сделок и продаж",
+            "Участвовал в настройке и поддержке системы"
+          ]
+        }
+      ],
+      projectsH: "Проекты",
+      projects: [
+        {
+          title: "Custom Mechanical Keyboards",
+          items: [
+            "Спроектировал и собрал handwired-клавиатуры с нуля",
+            "Разработал 3D-печатные корпуса под свою разводку",
+            "Прошивка на QMK и ZMK — полный цикл: electronics → firmware → enclosure"
+          ]
+        }
+      ],
       skills: [
-        ['├─ ', 'ОС', ' Linux (Arch, Ubuntu, Fedora, Debian), Windows'],
-        ['├─ ', 'Языки', ' Python, Bash, Rust, SQL'],
+        ['├─ ', 'Linux', ' Arch, Ubuntu, Fedora, Debian, systemd, Bash'],
+        ['├─ ', 'DevOps', ' Docker, Prometheus, Grafana'],
         ['├─ ', 'VCS', ' Git, GitHub'],
-        ['└─ ', 'БД', ' PostgreSQL, MySQL'],
-        ['├─ ', 'DevOps', ' Linux Admin, Bash, SSH, Systemd, Log Analysis'],
-        ['├─ ', 'Контейнеры', ' Docker, Docker Compose'],
-        ['├─ ', 'Сети', ' TCP/IP, DNS, DHCP, HTTP/HTTPS'],
-        ['├─ ', 'AI', ' AI-Assisted Dev, Prompt Engineering, Code Gen'],
-        ['└─ ', 'Концепции', ' CI/CD, Automation, IaC (Basic), Monitoring']
+        ['└─ ', 'Автоматизация', ' Bash-скрипты, systemd-сервисы, kiosk-деплой'],
+        ['├─ ', 'Сети', ' TCP/IP, DNS, DHCP, SSH'],
+        ['├─ ', 'AD/Windows', ' Active Directory, установка и поддержка ПК'],
+        ['├─ ', 'Firmware', ' QMK, ZMK'],
+        ['└─ ', '3D-печать', ' Моделирование и печать корпусов']
       ],
       summaryH: "Профессиональное резюме",
       eduH: "Образование",
@@ -486,23 +560,62 @@
       langH: "Языки",
       lang: ["Казахский — Родной (Native)", "Русский — C2 (Advanced)", "Английский — Professional Working Proficiency"],
       objH: "Цель (Career Objective)",
-      obj: "Ищу позицию начального уровня (entry-level) в качестве Software Engineer, Junior DevOps Engineer или Linux System Administrator, где смогу внести вклад в разработку надежного ПО и инфраструктуры, одновременно расширяя свой опыт в автоматизации, облачных технологиях и современных практиках DevOps."
+      obj: "Ищу позицию в IT, где смогу расти дальше — не ограничиваясь системным администрированием, а развиваясь в DevOps, CI/CD, IaC и облачных технологиях."
     },
     kz: {
       name: "АМИР ИСКАКОВ",
-      subtitle: "Software Engineer • Junior DevOps Engineer • Linux жүйелік әкімшісі",
-      summary: "Astana IT University-ді Software Engineering мамандығы бойынша бітірген, Linux жүйелік әкімшілігі, желілік технологиялар, автоматтандыру және бағдарламалық жасақтама әзірлеу салаларында берік негізі бар түлек. DevOps, бұлтты технологиялар, инфрақұрылымды автоматтандыру және CI/CD-ге қызығушылық танытады. Linux орталарында және AI-assisted әзірлеу құралдарын қолдануда тәжірибесі бар. Күшті аналитикалық қабілеттерге, ақаулықтарды жою дағдыларына ие және үздіксіз оқуға бағытталған.",
+      subtitle: "Linux жүйелік әкімшісі • Junior DevOps Engineer",
+      summary: "Тәжірибелі Linux инженері және автоматтандырушы. Debian/Sway негізінде kiosk-жүйені нөлден жасады — Bash-скрипттер арқылы автоматты орнату, systemd-сервистер арқылы істен шығудан қорғау. Active Directory, Docker, Prometheus, Grafana-мен жұмыс істеді. Мақсаты — DevOps және инфрақұрылымдық инженерияда өсу.",
       edu: '<strong>Astana IT University</strong><br>Software Engineering бакалавры',
+      workH: "Жұмыс тәжірибесі",
+      work: [
+        {
+          title: "Kiosk System Engineer",
+          tech: "Bash · systemd · Debian · Sway",
+          items: [
+            "Debian/Sway негізінде минималды kiosk-жүйені нөлден жасадым",
+            "Bash-скрипттер арқылы автоматты орнату және конфигурациялау",
+            "systemd-сервистер арқылы браузердің автоіске қосылуы және қалпына келтірілуі",
+            "Қажетсіз бағдарламаларды алып тастап, тек браузер kiosk режимінде қалдырдым"
+          ]
+        },
+        {
+          title: "System Administrator (тәжірибе) — NROC, Онкологиялық орталық, Астана",
+          tech: "Active Directory · Windows · PC support",
+          items: [
+            "Active Directory қызмет көрсету, принтерлер мен жұмыс станцияларын баптау",
+            "ДК жинау және қолдау"
+          ]
+        },
+        {
+          title: "Тәжірибе — X2POS",
+          tech: "POS · Business software",
+          items: [
+            "POS-шешімімен жұмыс (мәмілелер мен сатуларды есепке алу)",
+            "Жүйені баптау және қолдау"
+          ]
+        }
+      ],
+      projectsH: "Жобалар",
+      projects: [
+        {
+          title: "Custom Mechanical Keyboards",
+          items: [
+            "Handwired пернетақталарды нөлден жобалап, жинадым",
+            "3D-басылған корпустар жасадым",
+            "QMK және ZMK микробағдарламасы — толық цикл"
+          ]
+        }
+      ],
       skills: [
-        ['├─ ', 'ОЖ', ' Linux (Arch, Ubuntu, Fedora, Debian), Windows'],
-        ['├─ ', 'Бағдарламалау', ' Python, Bash, Rust, SQL'],
+        ['├─ ', 'Linux', ' Arch, Ubuntu, Fedora, Debian, systemd, Bash'],
+        ['├─ ', 'DevOps', ' Docker, Prometheus, Grafana'],
         ['├─ ', 'VCS', ' Git, GitHub'],
-        ['└─ ', 'ДҚ', ' PostgreSQL, MySQL'],
-        ['├─ ', 'DevOps', ' Linux Admin, Bash, SSH, Systemd, Log Analysis'],
-        ['├─ ', 'Контейнерлер', ' Docker, Docker Compose'],
-        ['├─ ', 'Желілер', ' TCP/IP, DNS, DHCP, HTTP/HTTPS'],
-        ['├─ ', 'AI', ' AI-Assisted Dev, Prompt Engineering, Code Gen'],
-        ['└─ ', 'Концепциялар', ' CI/CD, Automation, IaC (Basic), Monitoring']
+        ['└─ ', 'Автоматтандыру', ' Bash-скрипттер, systemd-сервистер, kiosk-деплой'],
+        ['├─ ', 'Желілер', ' TCP/IP, DNS, DHCP, SSH'],
+        ['├─ ', 'AD/Windows', ' Active Directory, ДК қолдау'],
+        ['├─ ', 'Firmware', ' QMK, ZMK'],
+        ['└─ ', '3D-басып шығару', ' Модельдеу және корпустарды басып шығару']
       ],
       summaryH: "Кәсіби түйіндеме",
       eduH: "Білім",
@@ -512,23 +625,62 @@
       langH: "Тілдер",
       lang: ["Қазақ — Ана тілі", "Орыс — C2 (Advanced)", "Ағылшын — Professional Working Proficiency"],
       objH: "Мақсат (Career Objective)",
-      obj: "Software Engineer, Junior DevOps Engineer немесе Linux жүйелік әкімшісі ретінде бастапқы деңгейдегі лауазым іздеймін, онда сенімді бағдарламалық жасақтама мен инфрақұрылымды әзірлеуге үлес қоса аламын және автоматтандыру, бұлтты технологиялар мен заманауи DevOps тәжірибелеріндегі тәжірибемді кеңейте аламын."
+      obj: "IT саласында өсуге мүмкіндік беретін лауазым іздеймін — жүйелік әкімшілікпен шектелмей, DevOps, CI/CD, IaC және бұлтты технологиялар бағытында даму."
     },
     en: {
       name: "ISKAKOV AMIR",
-      subtitle: "Software Engineer • Junior DevOps Engineer • Linux System Administrator",
-      summary: "A graduate of Astana IT University with a degree in Software Engineering, possessing a strong foundation in Linux system administration, networking, automation, and software development. Passionate about DevOps, cloud technologies, infrastructure automation, and CI/CD. Experienced in Linux environments and AI-assisted development tools for debugging, productivity enhancement, and engineering optimization. Strong analytical and troubleshooting skills with a commitment to continuous learning.",
+      subtitle: "Linux System Administrator • Junior DevOps Engineer",
+      summary: "Hands-on Linux engineer and automation specialist. Built a kiosk system on Debian/Sway from scratch — Bash scripts for automated deployment, systemd services for crash recovery, full OS hardening. Worked with Active Directory, Docker, Prometheus, Grafana. Aiming to grow into DevOps and infrastructure engineering.",
       edu: '<strong>Astana IT University</strong><br>Bachelor\'s degree in Software Engineering',
+      workH: "Work Experience",
+      work: [
+        {
+          title: "Kiosk System Engineer",
+          tech: "Bash · systemd · Debian · Sway",
+          items: [
+            "Built a minimal Debian/Sway kiosk system from scratch",
+            "Wrote Bash scripts for fully automated deployment and configuration",
+            "Configured systemd services for browser auto-launch and crash recovery",
+            "Removed desktop environment — browser-only in kiosk mode with security flags"
+          ]
+        },
+        {
+          title: "System Administrator (practice) — NROC Cancer Center, Astana",
+          tech: "Active Directory · Windows · PC support",
+          items: [
+            "Managed Active Directory, printer setup, and workstation maintenance",
+            "Assembled and supported PC fleet"
+          ]
+        },
+        {
+          title: "Practice — X2POS",
+          tech: "POS · Business software",
+          items: [
+            "Worked with POS solution for deal tracking and sales",
+            "Assisted in system setup and support"
+          ]
+        }
+      ],
+      projectsH: "Projects",
+      projects: [
+        {
+          title: "Custom Mechanical Keyboards",
+          items: [
+            "Designed and built fully handwired keyboards from scratch",
+            "Developed 3D-printed enclosures tailored to wiring",
+            "Firmware with QMK and ZMK — full cycle: electronics → firmware → enclosure"
+          ]
+        }
+      ],
       skills: [
-        ['├─ ', 'OS', ' Linux (Arch, Ubuntu, Fedora, Debian), Windows'],
-        ['├─ ', 'Languages', ' Python, Bash, Rust, SQL'],
+        ['├─ ', 'Linux', ' Arch, Ubuntu, Fedora, Debian, systemd, Bash'],
+        ['├─ ', 'DevOps', ' Docker, Prometheus, Grafana'],
         ['├─ ', 'VCS', ' Git, GitHub'],
-        ['└─ ', 'DB', ' PostgreSQL, MySQL'],
-        ['├─ ', 'DevOps', ' Linux Admin, Bash, SSH, Systemd, Log Analysis'],
-        ['├─ ', 'Containers', ' Docker, Docker Compose'],
-        ['├─ ', 'Networking', ' TCP/IP, DNS, DHCP, HTTP/HTTPS'],
-        ['├─ ', 'AI', ' AI-Assisted Dev, Prompt Engineering, Code Gen'],
-        ['└─ ', 'Concepts', ' CI/CD, Automation, IaC (Basic), Monitoring']
+        ['└─ ', 'Automation', ' Bash scripting, systemd services, kiosk deployment'],
+        ['├─ ', 'Networking', ' TCP/IP, DNS, DHCP, SSH'],
+        ['├─ ', 'AD/Windows', ' Active Directory, PC setup & support'],
+        ['├─ ', 'Firmware', ' QMK, ZMK'],
+        ['└─ ', '3D Printing', ' Modeling and printing enclosures']
       ],
       summaryH: "Professional Summary",
       eduH: "Education",
@@ -538,7 +690,7 @@
       langH: "Languages",
       lang: ["Kazakh — Native", "Russian — C2 (Advanced)", "English — Professional Working Proficiency"],
       objH: "Career Objective",
-      obj: "Seeking an entry-level position as a Software Engineer, Junior DevOps Engineer, or Linux System Administrator, where I can contribute to building reliable software and infrastructure while expanding my experience in automation, cloud technologies, and modern DevOps practices."
+      obj: "Seeking a position in IT with room to grow — not limited to system administration, but advancing into DevOps, CI/CD, IaC, and cloud technologies."
     }
   };
 
@@ -555,14 +707,37 @@
     ).join('') + '</div>';
   }
 
+  function renderWork(work) {
+    return work.map(function(job) {
+      return '<div class="work-item">' +
+        '<div class="work-title">' + job.title + '</div>' +
+        (job.tech ? '<div class="work-tech">' + job.tech + '</div>' : '') +
+        '<ul>' + job.items.map(function(i) { return '<li>' + i + '</li>'; }).join('') + '</ul>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderProjects(projects) {
+    return projects.map(function(p) {
+      return '<div class="project-item">' +
+        '<div class="work-title">' + p.title + '</div>' +
+        '<ul>' + p.items.map(function(i) { return '<li>' + i + '</li>'; }).join('') + '</ul>' +
+        '</div>';
+    }).join('');
+  }
+
   function renderLang(lang) {
     const d = data[lang];
     document.getElementById('js-name').textContent = d.name;
     document.getElementById('js-subtitle').textContent = d.subtitle;
     document.getElementById('js-summary').textContent = d.summary;
     document.getElementById('js-edu').innerHTML = d.edu;
+    document.getElementById('js-work').innerHTML = renderWork(d.work);
+    document.getElementById('js-projects').innerHTML = renderProjects(d.projects);
     document.getElementById('js-skills').innerHTML = renderSkills(d.skills);
     document.getElementById('js-summary-h').textContent = d.summaryH;
+    document.getElementById('js-work-h').textContent = d.workH;
+    document.getElementById('js-projects-h').textContent = d.projectsH;
     document.getElementById('js-edu-h').textContent = d.eduH;
     document.getElementById('js-skills-h').textContent = d.skillsH;
     document.getElementById('js-soft-h').textContent = d.softH;
