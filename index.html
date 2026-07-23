@@ -295,12 +295,26 @@
 
   @media print {
     body {
-      background: var(--bg);
+      --bg: #ffffff;
+      --bg-soft: #ffffff;
+      --fg: #000000;
+      --fg-dim: #444444;
+      --fg-dark: #000000;
+      --blue: #000000;
+      --green: #000000;
+      --yellow: #000000;
+      --red: #000000;
+      --orange: #000000;
+      --aqua: #000000;
+      --border: #bbbbbb;
+      --border-light: #cccccc;
+      --tab-bg: #f0f0f0;
+      --tab-hover: #e0e0e0;
+      --tab-active: #e0e0e0;
+      background: #ffffff;
       padding: 0;
       font-size: var(--print-fs);
     }
-
-    
 
     .titlebar { display: none; }
 
@@ -311,7 +325,7 @@
     header {
       padding-bottom: 6px;
       margin-bottom: 6px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #999999;
     }
 
     h1 { font-size: 15pt; }
@@ -321,14 +335,15 @@
     .section-header { font-size: 8pt; }
     .section-header::before { content: ""; }
     .section-header::after { content: ""; }
+    .section-header { color: #000000; }
     .section p { font-size: var(--print-fs); margin: 0 0 4px 0; }
     .skill-line { font-size: var(--print-fs); margin-bottom: 3px; }
+    .skill-line .prefix { color: #000000; }
     .two-col ul { font-size: var(--print-fs); }
-    .two-col h3 { font-size: var(--print-fs); }
+    .two-col h3 { font-size: var(--print-fs); color: #000000; }
 
     .section { page-break-inside: avoid; }
     header { page-break-after: avoid; }
-    * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   }
 </style>
 </head>
