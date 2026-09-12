@@ -112,6 +112,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
     background: var(--bg-soft);
     border-bottom: 1.5px solid var(--border);
     padding: 6px 12px;
@@ -121,6 +123,15 @@
   .tabs {
     display: flex;
     gap: 2px;
+    flex-wrap: wrap;
+  }
+
+  .tabs-group-label {
+    font-size: 7pt;
+    color: var(--fg-dim);
+    align-self: center;
+    margin: 0 4px 0 8px;
+    letter-spacing: 0.5px;
   }
 
   .tab {
@@ -148,9 +159,20 @@
     border-color: var(--border);
   }
 
-  .theme-toggle {
+  .tab.role-tab.active {
+    color: var(--yellow);
+  }
+
+  .actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .theme-toggle, .dl-btn {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10pt;
+    font-size: 8.5pt;
+    font-weight: 500;
     cursor: pointer;
     padding: 4px 10px;
     border: 1px solid var(--border);
@@ -158,11 +180,17 @@
     background: transparent;
     color: var(--yellow);
     transition: all 0.15s;
-    line-height: 1;
+    line-height: 1.4;
+    letter-spacing: 0.3px;
   }
 
-  .theme-toggle:hover {
+  .theme-toggle:hover, .dl-btn:hover {
     background: var(--tab-hover);
+  }
+
+  .dl-btn {
+    color: var(--green);
+    border-color: var(--border);
   }
 
   .screen {
@@ -190,6 +218,18 @@
     font-weight: 500;
     margin-bottom: 4px;
     letter-spacing: 0.3px;
+  }
+
+  .role-badge {
+    display: inline-block;
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: var(--yellow);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 8px;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
   }
 
   .contact {
@@ -296,7 +336,7 @@
     letter-spacing: 0.3px;
   }
 
-  .work-item, .project-item {
+  .work-item, .project-item, .ai-item {
     margin-bottom: 5px;
   }
   .work-title {
@@ -305,19 +345,50 @@
     color: var(--fg);
     margin-bottom: 1px;
   }
+  .work-meta {
+    font-size: 7.5pt;
+    color: var(--fg-dim);
+    margin-bottom: 2px;
+  }
+  .work-meta .period {
+    color: var(--blue);
+    font-weight: 500;
+  }
+  .work-meta .type {
+    display: inline-block;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0 5px;
+    margin-left: 6px;
+    font-size: 7pt;
+    color: var(--aqua);
+    letter-spacing: 0.3px;
+  }
   .work-tech {
     font-size: 7.5pt;
     color: var(--fg-dim);
     margin-bottom: 2px;
   }
-  .work-item ul, .project-item ul {
+  .work-item ul, .project-item ul, .ai-item ul {
     margin: 0;
     padding-left: 14px;
     font-size: 8.5pt;
   }
-  .work-item li, .project-item li {
+  .work-item li, .project-item li, .ai-item li {
     margin-bottom: 1px;
     color: var(--fg);
+  }
+  .work-item li b, .project-item li b, .ai-item li b {
+    color: var(--fg);
+  }
+  .tar { color: var(--green); font-weight: 700; }
+
+  .note {
+    font-size: 7.5pt;
+    color: var(--fg-dim);
+    border-left: 2px solid var(--border);
+    padding-left: 8px;
+    margin: 4px 0 5px 0;
   }
 
   @media print {
@@ -368,13 +439,14 @@
     .skill-line .prefix { color: #000000; }
     .two-col ul { font-size: var(--print-fs); }
     .two-col h3 { font-size: var(--print-fs); color: #000000; }
-    .work-item ul, .project-item ul { font-size: var(--print-fs); }
+    .work-item ul, .project-item ul, .ai-item ul { font-size: var(--print-fs); }
     .work-title { font-size: var(--print-fs); }
-    .work-tech { font-size: 7pt; }
+    .work-tech, .work-meta { font-size: 7pt; }
+    .role-badge { color: #000; border-color: #999; }
 
     .hints { display: none; }
 
-  .section { page-break-inside: avoid; }
+    .section { page-break-inside: avoid; }
     header { page-break-after: avoid; }
   }
 
@@ -394,18 +466,26 @@
 
 <div id="terminal">
   <div class="titlebar">
-    <div class="tabs">
+    <div class="tabs" id="roleTabs">
+      <div class="tab role-tab active" data-role="sysadmin">SysAdmin</div>
+      <div class="tab role-tab" data-role="devops">DevOps</div>
+      <div class="tab role-tab" data-role="developer">Developer</div>
+      <span class="tabs-group-label" id="langLabel">LANG:</span>
       <div class="tab active" data-lang="ru">[ RU ]</div>
       <div class="tab" data-lang="kz">[ KZ ]</div>
       <div class="tab" data-lang="en">[ EN ]</div>
     </div>
-    <div class="theme-toggle" id="themeToggle" title="Toggle theme">~</div>
+    <div class="actions">
+      <button class="dl-btn" id="dlBtn" title="Download PDF">↓ PDF</button>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">~</button>
+    </div>
   </div>
 
   <div class="screen">
     <header>
       <h1 id="js-name">ИСКАКОВ АМИР</h1>
-      <div class="subtitle" id="js-subtitle">Software Engineer • Full-Stack Developer (C#/.NET, Angular, Flutter) • Linux &amp; DevOps</div>
+      <div class="role-badge" id="js-role">Linux System Administrator</div>
+      <div class="subtitle" id="js-subtitle"></div>
       <div class="contact" id="js-contact">
         Казахстан &nbsp;│&nbsp;
         <a href="mailto:iskakovamir7486@gmail.com">iskakovamir7486@gmail.com</a> &nbsp;│&nbsp;
@@ -415,386 +495,611 @@
     </header>
 
     <div class="section">
-      <div class="section-header" id="js-summary-h">Профессиональное резюме</div>
-      <p id="js-summary">
-        Выпускник Astana IT University по специальности Software Engineering с прочной базой в Linux-системном администрировании, сетевых технологиях, автоматизации и разработке ПО. Имею опыт разработки на C# / ASP.NET, фронтенде на Angular и мобильной разработке на Flutter. Увлечен DevOps, облачными технологиями, автоматизацией инфраструктуры и CI/CD. Имею опыт работы в Linux-средах и использования инструментов AI-assisted разработки для ускорения отладки, повышения продуктивности и оптимизации инженерных процессов. Обладаю сильными аналитическими способностями, навыками поиска неисправностей (troubleshooting) и нацелен на постоянное обучение.
-      </p>
+      <div class="section-header" id="js-summary-h"></div>
+      <p id="js-summary"></p>
     </div>
 
     <div class="section">
-      <div class="section-header" id="js-edu-h">Образование</div>
-      <p id="js-edu">
-        <strong>Astana IT University</strong><br>
-        Бакалавр в области Software Engineering
-      </p>
+      <div class="section-header" id="js-edu-h"></div>
+      <p id="js-edu"></p>
     </div>
 
     <div class="section">
-      <div class="section-header" id="js-work-h">Опыт работы</div>
+      <div class="section-header" id="js-work-h"></div>
       <div id="js-work"></div>
     </div>
 
     <div class="section">
-      <div class="section-header" id="js-projects-h">Проекты</div>
+      <div class="section-header" id="js-projects-h"></div>
       <div id="js-projects"></div>
+      <div class="note" id="js-projects-note"></div>
     </div>
 
     <div class="section">
-      <div class="section-header" id="js-skills-h">Технические навыки</div>
-      <div class="skills-grid" id="js-skills">
-        <div class="skills-col">
-          <div class="skill-line"><span class="prefix">├─ </span><span class="label">ОС</span><span class="value"> Linux (Arch, Ubuntu, Fedora, Debian), Windows</span></div>
-          <div class="skill-line"><span class="prefix">├─ </span><span class="label">Языки</span><span class="value"> Python, Bash, Rust, SQL, C#</span></div>
-          <div class="skill-line"><span class="prefix">├─ </span><span class="label">Разработка</span><span class="value"> ASP.NET, Angular, Flutter</span></div>
-          <div class="skill-line"><span class="prefix">├─ </span><span class="label">VCS</span><span class="value"> Git, GitHub</span></div>
-          <div class="skill-line"><span class="prefix">└─ </span><span class="label">БД</span><span class="value"> PostgreSQL, MySQL</span></div>
-        </div>
-        <div class="skills-col">
-          <div class="skill-line"><span class="prefix">├─ </span><span class="label">DevOps</span><span class="value"> Linux Admin, Bash, SSH, Systemd, Log Analysis</span></div>
-          <div class="skill-line"><span class="prefix">├─ </span><span class="label">Контейнеры</span><span class="value"> Docker, Docker Compose</span></div>
-          <div class="skill-line"><span class="prefix">├─ </span><span class="label">Сети</span><span class="value"> TCP/IP, DNS, DHCP, HTTP/HTTPS</span></div>
-          <div class="skill-line"><span class="prefix">├─ </span><span class="label">AI</span><span class="value"> AI-Assisted Dev, Prompt Engineering, Code Gen</span></div>
-          <div class="skill-line"><span class="prefix">└─ </span><span class="label">Концепции</span><span class="value"> CI/CD, Automation, IaC (Basic), Monitoring</span></div>
-        </div>
-      </div>
+      <div class="section-header" id="js-ai-h"></div>
+      <div id="js-ai"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" id="js-skills-h"></div>
+      <div class="skills-grid" id="js-skills"></div>
     </div>
 
     <div class="section">
       <div class="two-col">
         <div>
-          <h3 id="js-soft-h">Личные качества</h3>
-          <ul id="js-soft">
-            <li>Решение сложных задач</li>
-            <li>Аналитическое мышление</li>
-            <li>Быстрая обучаемость</li>
-            <li>Командное взаимодействие</li>
-            <li>Коммуникабельность</li>
-            <li>Адаптивность</li>
-            <li>Внимание к деталям</li>
-            <li>Тайм-менеджмент</li>
-          </ul>
+          <h3 id="js-soft-h"></h3>
+          <ul id="js-soft"></ul>
         </div>
         <div>
-          <h3 id="js-lang-h">Языки</h3>
-          <ul id="js-lang">
-            <li>Казахский — Родной (Native)</li>
-            <li>Русский — C2 (Advanced)</li>
-            <li>Английский — Professional Working Proficiency</li>
-          </ul>
+          <h3 id="js-lang-h"></h3>
+          <ul id="js-lang"></ul>
         </div>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-header" id="js-obj-h">Цель (Career Objective)</div>
-      <p id="js-obj">
-        Ищу позицию начального уровня (entry-level) в качестве Software Engineer, Junior DevOps Engineer или Linux System Administrator, где смогу внести вклад в разработку надежного ПО и инфраструктуры, одновременно расширяя свой опыт в автоматизации, облачных технологиях и современных практиках DevOps.
-      </p>
+      <div class="section-header" id="js-obj-h"></div>
+      <p id="js-obj"></p>
     </div>
 
-    <div class="hints">[T] Theme &nbsp;│&nbsp; [L] Lang &nbsp;│&nbsp; [Ctrl+P] Print</div>
+    <div class="hints" id="js-hints">[R] Role &nbsp;│&nbsp; [L] Lang &nbsp;│&nbsp; [T] Theme &nbsp;│&nbsp; [Ctrl+P] Print → PDF</div>
   </div>
 </div>
 
 <script>
-  const data = {
+  // ---------- Base (shared) per language: dates, practice vs own ----------
+  const BASE = {
     ru: {
-      name: "ИСКАКОВ АМИР",
-      subtitle: "Software Engineer • Full-Stack Developer (C#/.NET, Angular, Flutter) • Linux & DevOps",
-      summary: "Практикующий инженер-разработчик и автоматизатор. Разрабатывал приложения на C# / ASP.NET, веб-интерфейсы на Angular и мобильные приложения на Flutter. Собрал kiosk-систему на Debian/Sway — Bash-скрипты для автоматической установки, systemd-сервисы для отказоустойчивости, полное устранение лишнего ПО. Работал с Active Directory, Docker, Prometheus, Grafana. Цель — рост в full-stack разработке и DevOps.",
-      edu: '<strong>Astana IT University</strong><br>Бакалавр в области Software Engineering',
-      workH: "Опыт работы",
+      edu: '<strong>Astana IT University</strong> — Бакалавр, Software Engineering<br><span style="color:var(--blue)">2023 – 2026</span>',
       work: [
-        {
-          title: "Kiosk System Engineer",
-          tech: "Bash · systemd · Debian · Sway",
-          items: [
-            "Собрал минимальную kiosk-систему на Debian/Sway",
-            "Написал Bash-скрипты для автоматической установки и конфигурации системы",
-            "Настроил systemd-сервисы для автозапуска браузера и восстановления после сбоев",
-            "Убрал десктоп-окружение — только браузер в киоск-режиме с флагами безопасности"
-          ]
-        },
         {
           title: "System Administrator (практика) — NROC, Онкологический центр, Астана",
+          period: "2026",
+          type: "Практика",
           tech: "Active Directory · Windows · PC support",
           items: [
-            "Обслуживал Active Directory, настраивал принтеры и рабочие станции",
-            "Собирал и поддерживал парк ПК"
+            "<span class='tar'>Задача:</span> поддержка ~50 рабочих мест: учётки, принтеры, рабочие станции.",
+            "<span class='tar'>Сделал сам:</span> администрировал AD (создание/отключение учёток, групповые политики), настраивал принтеры и сеть, собирал и вводил в эксплуатацию ПК.",
+            "<span class='tar'>Результат:</span> закрывал типовые заявки день-в-день, уменьшил простой рабочих мест."
           ]
         },
         {
-          title: "Практика — X2POS",
+          title: "Technical Writer (практика) — X2POS",
+          period: "2026",
+          type: "Практика",
           tech: "Technical Writing · POS",
           items: [
-            "Писал техническую документацию для POS-решения"
+            "<span class='tar'>Задача:</span> описать POS-решение так, чтобы им могли пользоваться без помощи разработчика.",
+            "<span class='tar'>Сделал сам:</span> написал структуру документации, инструкции по установке/настройке/типовым операциям, согласовал с командой (детали под NDA).",
+            "<span class='tar'>Результат:</span> полная документация для их приложения вместо разрозненных заметок; время онбординга новых сотрудников сократилось."
           ]
         }
       ],
-      projectsH: "Проекты",
       projects: [
         {
-          title: "Custom Mechanical Keyboards",
+          title: "Kiosk-система на Debian/Sway — заказ",
+          period: "2024",
+          type: "Заказ",
+          tech: "Bash · systemd · Debian · Sway",
           items: [
-            "Спроектировал и собрал handwired-клавиатуры с нуля",
-            "Моделировал корпуса в Blender / Fusion360",
-            "Прошивка на QMK и ZMK — полный цикл: electronics → firmware → enclosure"
+            "<span class='tar'>Задача:</span> терминал, где запускается только браузер в киоск-режиме и всё восстанавливается после сбоя.",
+            "<span class='tar'>Сделал сам:</span> Bash-скрипты автоустановки и конфигурации, systemd-юниты для автозапуска и рестарта, вырезал лишнее DE, добавил флаги безопасности браузера.",
+            "<span class='tar'>Результат:</span> развёртывание с нуля за ~30 минут (включая установку Debian) вместо ручной настройки за несколько часов; скрипты переиспользуемы."
+          ]
+        },
+        {
+          title: "МедСРМ и MVP-приложение — ASP.NET + Flutter",
+          period: "2026",
+          type: "Практика / Заказ",
+          tech: "C# · ASP.NET · Flutter · PostgreSQL · Angular",
+          items: [
+            "<span class='tar'>Задача:</span> добавить функционал в их медСРМ-систему и с нуля спроектировать MVP-приложение.",
+            "<span class='tar'>Сделал сам:</span> проектирование структуры данных и плана работ, backend на ASP.NET (CRUD, авторизация), клиент на Flutter; веб-часть на Angular.",
+            "<span class='tar'>Результат:</span> новый функционал в медСРМ внедрён, MVP собран от схемы БД до интерфейса (детали и код — по запросу, часть под NDA)."
+          ]
+        },
+        {
+          title: "Custom Mechanical Keyboards — умею делать под заказ",
+          period: "2025",
+          type: "Свой проект",
+          tech: "QMK · ZMK · Blender · Fusion360",
+          items: [
+            "<span class='tar'>Задача:</span> handwired-клавиатуры с нуля под свои руки.",
+            "<span class='tar'>Могу:</span> пайка и разводка, прошивка QMK/ZMK, корпуса в Blender/Fusion360 — уже собрал 2+ рабочие клавиатуры.",
+            "<span class='tar'>Результат:</span> полный цикл: электроника → прошивка → корпус; могу повторить под заказ."
           ]
         }
       ],
-      skills: [
-        ['├─ ', 'Разработка', ' C#, ASP.NET, Angular, Flutter'],
-        ['├─ ', 'Linux', ' Arch, Ubuntu, Fedora, Debian, systemd, Bash'],
-        ['├─ ', 'DevOps', ' Docker, Prometheus, Grafana'],
-        ['├─ ', 'VCS', ' Git, GitHub'],
-        ['└─ ', 'Автоматизация', ' Bash-скрипты, systemd-сервисы, kiosk-деплой'],
-        ['├─ ', 'Сети', ' TCP/IP, DNS, DHCP, SSH'],
-        ['├─ ', 'AD/Windows', ' Active Directory, установка и поддержка ПК'],
-        ['├─ ', 'Firmware', ' QMK, ZMK'],
-        ['└─ ', '3D-моделирование', ' Blender, Fusion360']
-      ],
-      summaryH: "Профессиональное резюме",
-      eduH: "Образование",
-      skillsH: "Технические навыки",
-      softH: "Личные качества",
-      soft: ["Решение сложных задач", "Аналитическое мышление", "Быстрая обучаемость", "Командное взаимодействие", "Коммуникабельность", "Адаптивность", "Внимание к деталям", "Тайм-менеджмент"],
-      langH: "Языки",
-      lang: ["Казахский — Родной (Native)", "Русский — C2 (Advanced)", "Английский — Professional Working Proficiency"],
-      objH: "Цель (Career Objective)",
-      obj: "Ищу позицию в IT, где смогу расти дальше — не ограничиваясь системным администрированием, а развиваясь в DevOps, CI/CD, IaC и облачных технологиях."
+      projectsNote: "Ссылки на часть проектов закрыты NDA — код и детали покажу на собеседовании. Открытое: github.com/amir1330.",
+      langList: ["Казахский — родной", "Русский — C2", "Английский — рабочий (документация, переписка)"]
     },
     kz: {
-      name: "ИСКАКОВ АМИР",
-      subtitle: "Software Engineer • Full-Stack Developer (C#/.NET, Angular, Flutter) • Linux & DevOps",
-      summary: "Тәжірибелі бағдарламашы және автоматтандырушы. C# / ASP.NET тілінде қолданбалар, Angular-да веб-интерфейстер және Flutter-да мобильді қосымшалар әзірледі. Debian/Sway негізінде kiosk-жүйені жинады — Bash-скрипттер арқылы автоматты орнату, systemd-сервистер арқылы істен шығудан қорғау. Active Directory, Docker, Prometheus, Grafana-мен жұмыс істеді. Мақсаты — full-stack әзірлеу және DevOps бағытында өсу.",
-      edu: '<strong>Astana IT University</strong><br>Software Engineering бакалавры',
-      workH: "Жұмыс тәжірибесі",
+      edu: '<strong>Astana IT University</strong> — Бакалавр, Software Engineering<br><span style="color:var(--blue)">2023 – 2026</span>',
       work: [
-        {
-          title: "Kiosk System Engineer",
-          tech: "Bash · systemd · Debian · Sway",
-          items: [
-            "Debian/Sway негізінде минималды kiosk-жүйені жинадым",
-            "Bash-скрипттер арқылы автоматты орнату және конфигурациялау",
-            "systemd-сервистер арқылы браузердің автоіске қосылуы және қалпына келтірілуі",
-            "Қажетсіз бағдарламаларды алып тастап, тек браузер kiosk режимінде қалдырдым"
-          ]
-        },
         {
           title: "System Administrator (тәжірибе) — NROC, Онкологиялық орталық, Астана",
+          period: "2026",
+          type: "Тәжірибе",
           tech: "Active Directory · Windows · PC support",
           items: [
-            "Active Directory қызмет көрсету, принтерлер мен жұмыс станцияларын баптау",
-            "ДК жинау және қолдау"
+            "<span class='tar'>Міндет:</span> ~50 жұмыс орнын қолдау: тіркелгілер, принтерлер, станциялар.",
+            "<span class='tar'>Өзім істедім:</span> AD әкімшілігі, принтер/желі баптау, ДК жинау және іске қосу.",
+            "<span class='tar'>Нәтиже:</span> типовые өтінімдер күнінде жабылды, тоқтап тұру азайды."
           ]
         },
         {
-          title: "Тәжірибе — X2POS",
+          title: "Technical Writer (тәжірибе) — X2POS",
+          period: "2026",
+          type: "Тәжірибе",
           tech: "Technical Writing · POS",
           items: [
-            "POS-шешіміне техникалық құжаттама жаздым"
+            "<span class='tar'>Міндет:</span> POS-шешімді әзірлеушісіз қолдануға болатындай сипаттау.",
+            "<span class='tar'>Өзім істедім:</span> орнату/баптау нұсқаулықтары, құжаттама құрылымы (детальдары NDA).",
+            "<span class='tar'>Нәтиже:</span> шашыраңқы жазбалардың орнына бірыңғай құжат."
           ]
         }
       ],
-      projectsH: "Жобалар",
       projects: [
         {
-          title: "Custom Mechanical Keyboards",
-          items: [
-            "Handwired пернетақталарды нөлден жобалап, жинадым",
-            "Blender / Fusion360-да корпустарды модельдедім",
-            "QMK және ZMK микробағдарламасы — толық цикл"
-          ]
-        }
-      ],
-      skills: [
-        ['├─ ', 'Әзірлеу', ' C#, ASP.NET, Angular, Flutter'],
-        ['├─ ', 'Linux', ' Arch, Ubuntu, Fedora, Debian, systemd, Bash'],
-        ['├─ ', 'DevOps', ' Docker, Prometheus, Grafana'],
-        ['├─ ', 'VCS', ' Git, GitHub'],
-        ['└─ ', 'Автоматтандыру', ' Bash-скрипттер, systemd-сервистер, kiosk-деплой'],
-        ['├─ ', 'Желілер', ' TCP/IP, DNS, DHCP, SSH'],
-        ['├─ ', 'AD/Windows', ' Active Directory, ДК қолдау'],
-        ['├─ ', 'Firmware', ' QMK, ZMK'],
-        ['└─ ', '3D-модельдеу', ' Blender, Fusion360']
-      ],
-      summaryH: "Кәсіби түйіндеме",
-      eduH: "Білім",
-      skillsH: "Техникалық дағдылар",
-      softH: "Жеке қасиеттер",
-      soft: ["Күрделі мәселелерді шешу", "Аналитикалық ойлау", "Тез үйрену қабілеті", "Командалық жұмыс", "Қарым-қатынас дағдылары", "Бейімделгіштік", "Толықтыққа мұқияттылық", "Уақытты басқару"],
-      langH: "Тілдер",
-      lang: ["Қазақ — Ана тілі", "Орыс — C2 (Advanced)", "Ағылшын — Professional Working Proficiency"],
-      objH: "Мақсат (Career Objective)",
-      obj: "IT саласында өсуге мүмкіндік беретін лауазым іздеймін — жүйелік әкімшілікпен шектелмей, DevOps, CI/CD, IaC және бұлтты технологиялар бағытында даму."
-    },
-    en: {
-      name: "ISKAKOV AMIR",
-      subtitle: "Software Engineer • Full-Stack Developer (C#/.NET, Angular, Flutter) • Linux & DevOps",
-      summary: "Hands-on developer and automation specialist. Built applications with C# / ASP.NET, web interfaces with Angular, and mobile apps with Flutter. Set up a kiosk system on Debian/Sway — Bash scripts for automated deployment, systemd services for crash recovery, full OS hardening. Worked with Active Directory, Docker, Prometheus, Grafana. Aiming to grow into full-stack development and DevOps.",
-      edu: '<strong>Astana IT University</strong><br>Bachelor\'s degree in Software Engineering',
-      workH: "Work Experience",
-      work: [
-        {
-          title: "Kiosk System Engineer",
+          title: "Debian/Sway kiosk-жүйе — тапсырыс",
+          period: "2024",
+          type: "Тапсырыс",
           tech: "Bash · systemd · Debian · Sway",
           items: [
-            "Set up a minimal Debian/Sway kiosk system",
-            "Wrote Bash scripts for fully automated deployment and configuration",
-            "Configured systemd services for browser auto-launch and crash recovery",
-            "Stripped desktop environment — browser-only in kiosk mode with security flags"
+            "<span class='tar'>Міндет:</span> тек браузер kiosk-режимде істейтін, істен шықса қалпына келетін терминал.",
+            "<span class='tar'>Өзім істедім:</span> автоорнату Bash-скрипттері, systemd-юниттер, артық DE-ні алып тастау.",
+            "<span class='tar'>Нәтиже:</span> нөлден ~30 минутта деплой (Debian орнатумен қоса); скрипттер қайта қолданылады."
           ]
         },
         {
-          title: "System Administrator (practice) — NROC Cancer Center, Astana",
+          title: "МедСРМ және MVP-қосымша — ASP.NET + Flutter",
+          period: "2026",
+          type: "Тәжірибе / Тапсырыс",
+          tech: "C# · ASP.NET · Flutter · PostgreSQL · Angular",
+          items: [
+            "<span class='tar'>Міндет:</span> олардың медСРМ жүйесіне функционал қосу және нөлден MVP-қосымша жобалау.",
+            "<span class='tar'>Өзім істедім:</span> деректер құрылымы мен жоспарды жобалау, ASP.NET backend (CRUD, авторизация), Flutter клиент; веб-бөлігі Angular.",
+            "<span class='tar'>Нәтиже:</span> медСРМ-ге жаңа функционал енді, MVP ДҚ сызбасынан интерфейске дейін жиналды (детальдары NDA, код — сұраныс бойынша)."
+          ]
+        },
+        {
+          title: "Custom Mechanical Keyboards — тапсырыспен жасай аламын",
+          period: "2025",
+          type: "Өз жобам",
+          tech: "QMK · ZMK · Blender · Fusion360",
+          items: [
+            "<span class='tar'>Міндет:</span> handwired пернетақталарды нөлден жинау.",
+            "<span class='tar'>Істей аламын:</span> дәнекерлеу, QMK/ZMK прошивкасы, Blender/Fusion360 корпус — 2+ дайын пернетақта жинадым.",
+            "<span class='tar'>Нәтиже:</span> толық цикл: электроника → прошивка → корпус; тапсырыспен қайталай аламын."
+          ]
+        }
+      ],
+      projectsNote: "Жобалардың бір бөлігі NDA — кодты сұхбатта көрсетемін. Ашық: github.com/amir1330.",
+      langList: ["Қазақ — ана тілі", "Орыс — C2", "Ағылшын — жұмыс (құжаттама, хат алмасу)"]
+    },
+    en: {
+      edu: '<strong>Astana IT University</strong> — BSc, Software Engineering<br><span style="color:var(--blue)">2023 – 2026</span>',
+      work: [
+        {
+          title: "System Administrator (internship) — NROC Cancer Center, Astana",
+          period: "2026",
+          type: "Internship",
           tech: "Active Directory · Windows · PC support",
           items: [
-            "Managed Active Directory, printer setup, and workstation maintenance",
-            "Assembled and supported PC fleet"
+            "<span class='tar'>Task:</span> support ~50 workstations: accounts, printers, hardware.",
+            "<span class='tar'>Did myself:</span> AD admin (joiners/leavers, GPO), printer/network setup, PC assembly and provisioning.",
+            "<span class='tar'>Outcome:</span> routine tickets closed same-day; reduced workstation downtime."
           ]
         },
         {
-          title: "Practice — X2POS",
+          title: "Technical Writer (internship) — X2POS",
+          period: "2026",
+          type: "Internship",
           tech: "Technical Writing · POS",
           items: [
-            "Wrote technical documentation for the POS solution"
+            "<span class='tar'>Task:</span> document the POS solution so it works without a developer at hand.",
+            "<span class='tar'>Did myself:</span> doc structure, install/setup/operations guides, team review (details under NDA).",
+            "<span class='tar'>Outcome:</span> single source of truth instead of scattered notes; faster onboarding."
           ]
         }
       ],
-      projectsH: "Projects",
       projects: [
         {
-          title: "Custom Mechanical Keyboards",
+          title: "Debian/Sway kiosk system — contract",
+          period: "2024",
+          type: "Contract",
+          tech: "Bash · systemd · Debian · Sway",
           items: [
-            "Designed and built fully handwired keyboards from scratch",
-            "Modeled enclosures in Blender / Fusion360",
-            "Firmware with QMK and ZMK — full cycle: electronics → firmware → enclosure"
+            "<span class='tar'>Task:</span> locked-down terminal: browser-only kiosk, self-healing after crash.",
+            "<span class='tar'>Did myself:</span> Bash auto-install scripts, systemd units for autostart/restart, stripped DE, browser hardening flags.",
+            "<span class='tar'>Outcome:</span> fresh deploy in ~30 min (incl. Debian install) vs hours of manual setup; reusable scripts."
+          ]
+        },
+        {
+          title: "Medical CRM features + MVP app — ASP.NET + Flutter",
+          period: "2026",
+          type: "Internship / Contract",
+          tech: "C# · ASP.NET · Flutter · PostgreSQL · Angular",
+          items: [
+            "<span class='tar'>Task:</span> add features to their medical CRM system and design an MVP app from scratch.",
+            "<span class='tar'>Did myself:</span> data-structure design and work plan, ASP.NET backend (CRUD, auth), Flutter client; Angular web part.",
+            "<span class='tar'>Outcome:</span> new CRM features shipped, MVP built from DB schema to UI (details/code on request, partly under NDA)."
+          ]
+        },
+        {
+          title: "Custom Mechanical Keyboards — available for custom builds",
+          period: "2025",
+          type: "Personal",
+          tech: "QMK · ZMK · Blender · Fusion360",
+          items: [
+            "<span class='tar'>Task:</span> handwired keyboards from scratch.",
+            "<span class='tar'>Can do:</span> soldering/wiring, QMK/ZMK firmware, Blender/Fusion360 enclosures — already built 2+ working boards.",
+            "<span class='tar'>Outcome:</span> full cycle: electronics → firmware → enclosure; can repeat for custom orders."
           ]
         }
       ],
-      skills: [
-        ['├─ ', 'Development', ' C#, ASP.NET, Angular, Flutter'],
-        ['├─ ', 'Linux', ' Arch, Ubuntu, Fedora, Debian, systemd, Bash'],
-        ['├─ ', 'DevOps', ' Docker, Prometheus, Grafana'],
-        ['├─ ', 'VCS', ' Git, GitHub'],
-        ['└─ ', 'Automation', ' Bash scripting, systemd services, kiosk deployment'],
-        ['├─ ', 'Networking', ' TCP/IP, DNS, DHCP, SSH'],
-        ['├─ ', 'AD/Windows', ' Active Directory, PC setup & support'],
-        ['├─ ', 'Firmware', ' QMK, ZMK'],
-        ['└─ ', '3D Modeling', ' Blender, Fusion360']
-      ],
-      summaryH: "Professional Summary",
-      eduH: "Education",
-      skillsH: "Technical Skills",
-      softH: "Soft Skills",
-      soft: ["Problem Solving", "Analytical Thinking", "Quick Learning", "Team Collaboration", "Communication", "Adaptability", "Attention to Detail", "Time Management"],
-      langH: "Languages",
-      lang: ["Kazakh — Native", "Russian — C2 (Advanced)", "English — Professional Working Proficiency"],
-      objH: "Career Objective",
-      obj: "Seeking a position in IT with room to grow — not limited to system administration, but advancing into DevOps, CI/CD, IaC, and cloud technologies."
+      projectsNote: "Some projects are under NDA — happy to show code/details in interview. Public: github.com/amir1330.",
+      langList: ["Kazakh — native", "Russian — C2", "English — working (docs, correspondence)"]
     }
   };
 
+  // ---------- Role overlays ----------
+  const ROLES = {
+    sysadmin: {
+      file: "SysAdmin",
+      label: { ru: "Linux System Administrator", kz: "Linux System Administrator", en: "Linux System Administrator" },
+      ru: {
+        subtitle: "Linux System Administrator • Arch / Ubuntu / Fedora / Debian • Bash, systemd, AD",
+        summary: "Системный администратор Linux. Практика в NROC (Астана): ~50 рабочих мест, Active Directory, принтеры, сборка и поддержка ПК. Заказ — kiosk-система на Debian/Sway: Bash-автоустановка за ~30 минут (включая установку Debian), systemd-самовосстановление, вырезанное DE. Ежедневно работаю в Linux, читаю логи (journalctl), автоматизирую рутину скриптами.",
+        skills: [
+          ['├─ ', 'Linux', ' Arch, Ubuntu, Fedora, Debian, systemd, journalctl'],
+          ['├─ ', 'Администрирование', ' AD, пользователи/GPO, принтеры, поддержка ПК'],
+          ['├─ ', 'Сети', ' TCP/IP, DNS, DHCP, SSH'],
+          ['├─ ', 'Автоматизация', ' Bash-скрипты, systemd-юниты, kiosk-деплой'],
+          ['└─ ', 'Мониторинг', ' Docker (база), Prometheus/Grafana (база)']
+        ],
+        soft: ["Диагностика и troubleshooting", "Доведение заявок до закрытия день-в-день", "Документирование настроек", "Аккуратность в доступах и бэкапах"],
+        ai: [
+          "<span class='tar'>Логи:</span> journalctl/systemctl + ИИ-ассистент для разбора ошибок — диагностика типового сбоя с ~часа до ~20 минут.",
+          "<span class='tar'>Скрипты:</span> черновики Bash/systemd через ИИ, затем ручная проверка — kiosk-автоустановка собрана за дни вместо недель.",
+          "<span class='tar'>Доки:</span> инструкции и runbook'и из черновиков ИИ + вычитка — единый формат без воды."
+        ],
+        obj: "Ищу позицию Linux System Administrator / Helpdesk L1–L2: поддержка рабочих мест и серверов Linux/Windows, AD, автоматизация рутины Bash-скриптами. К стеку не привязан, готов учиться и набираться опыта. ЗП-ожидания: 200–300 тыс. ₸."
+      },
+      kz: {
+        subtitle: "Linux System Administrator • Arch / Ubuntu / Fedora / Debian • Bash, systemd, AD",
+        summary: "Linux жүйелік әкімшісі. NROC тәжірибесі (Астана): ~50 жұмыс орны, Active Directory, принтерлер, ДК жинау/қолдау. Өз жобам емес, тапсырыс — Debian/Sway kiosk-жүйе: ~30 минутта Bash-автоорнату (Debian орнатумен қоса), systemd қалпына келтіру. Күнде Linux-та жұмыс істеймін, лог оқимын, рутинаны скриптпен автоматтандырамын.",
+        skills: [
+          ['├─ ', 'Linux', ' Arch, Ubuntu, Fedora, Debian, systemd, journalctl'],
+          ['├─ ', 'Әкімшілік', ' AD, принтерлер, ДК қолдау'],
+          ['├─ ', 'Желілер', ' TCP/IP, DNS, DHCP, SSH'],
+          ['├─ ', 'Автоматтандыру', ' Bash-скрипттер, systemd-юниттер'],
+          ['└─ ', 'Мониторинг', ' Docker (база), Prometheus/Grafana (база)']
+        ],
+        soft: ["Диагностика және troubleshooting", "Өтінімді күнінде жабу", "Баптауларды құжаттау", "Рұқсаттарда мұқияттылық"],
+        ai: [
+          "<span class='tar'>Логтар:</span> journalctl + ИИ-көмекші — типтік ақау диагностикасы ~1 сағаттан ~20 минутқа.",
+          "<span class='tar'>Скрипттер:</span> Bash/systemd черновиктері ИИ арқылы, тексеру қолмен.",
+          "<span class='tar'>Құжаттар:</span> нұсқаулықтарды ИИ черновигінен + редактура."
+        ],
+        obj: "Linux System Administrator / Helpdesk L1–L2 лауазымын іздеймін: Linux/Windows қолдау, AD, Bash-автоматтандыру. Стекке байланбаймын, үйренуге дайынмын. Жалақы: 200–300 мың ₸."
+      },
+      en: {
+        subtitle: "Linux System Administrator • Arch / Ubuntu / Fedora / Debian • Bash, systemd, AD",
+        summary: "Linux sysadmin. Internship at NROC (Astana): ~50 workstations, Active Directory, printers, PC fleet. Contract — Debian/Sway kiosk: Bash auto-install in ~30 min (incl. Debian install), systemd self-healing, stripped DE. Daily Linux driver, read logs (journalctl), automate routine with scripts.",
+        skills: [
+          ['├─ ', 'Linux', ' Arch, Ubuntu, Fedora, Debian, systemd, journalctl'],
+          ['├─ ', 'Admin', ' AD, users/GPO, printers, PC support'],
+          ['├─ ', 'Networking', ' TCP/IP, DNS, DHCP, SSH'],
+          ['├─ ', 'Automation', ' Bash scripting, systemd units'],
+          ['└─ ', 'Monitoring', ' Docker (basic), Prometheus/Grafana (basic)']
+        ],
+        soft: ["Diagnostics & troubleshooting", "Same-day ticket closure", "Documenting setups", "Careful with access & backups"],
+        ai: [
+          "<span class='tar'>Logs:</span> journalctl + AI assistant for error triage — typical failure diagnosis from ~1h to ~20 min.",
+          "<span class='tar'>Scripts:</span> AI-drafted Bash/systemd, manually reviewed — kiosk rollout built in days not weeks.",
+          "<span class='tar'>Docs:</span> runbooks from AI drafts + human edit — consistent, no fluff."
+        ],
+        obj: "Seeking Linux System Administrator / Helpdesk L1–L2: Linux/Windows fleet, AD, Bash automation of routine. Stack-flexible, eager to learn. Salary: 200–300k KZT."
+      }
+    },
+    devops: {
+      file: "DevOps",
+      label: { ru: "Junior DevOps Engineer", kz: "Junior DevOps Engineer", en: "Junior DevOps Engineer" },
+      ru: {
+        subtitle: "Junior DevOps Engineer • Linux, Docker, Bash • CI/CD, Prometheus/Grafana",
+        summary: "Начинающий DevOps на базе Linux-администрирования. Умею: Bash-автоматизация, systemd-сервисы, Docker/Compose, базовый мониторинг Prometheus/Grafana. Кейс — kiosk-деплой: было — ручная настройка часами, стало — скрипт за ~30 минут (включая установку Debian) с восстановлением после сбоев. Понимаю TCP/IP, DNS, SSH, читаю логи, пишу runbook'и. Следующий шаг — CI/CD и IaC на реальном проекте.",
+        skills: [
+          ['├─ ', 'Linux', ' Arch/Ubuntu/Debian, systemd, Bash, SSH, логи'],
+          ['├─ ', 'Контейнеры', ' Docker, Compose'],
+          ['├─ ', 'Мониторинг', ' Prometheus, Grafana (база)'],
+          ['├─ ', 'Сети', ' TCP/IP, DNS, DHCP, HTTP(S)'],
+          ['└─ ', 'Концепции', ' CI/CD, автоматизация, IaC (база)']
+        ],
+        soft: ["Автоматизирую повторяющееся вместо ручной работы", "Читаю логи и нахожу первопричину", "Пишу воспроизводимые инструкции", "Довожу деплой до состояния «перезапустил и работает»"],
+        ai: [
+          "<span class='tar'>Деплой-скрипты:</span> черновик через ИИ → ручная проверка → тест на чистой VM — kiosk-скрипты переиспользуемы.",
+          "<span class='tar'>Логи/алерты:</span> разбор journalctl/docker logs с ИИ — типовой инцидент разбираю за ~20 минут.",
+          "<span class='tar'>Пример автоматизации для бизнеса:</span> отчёты из нескольких CSV → один XLSX + автонапоминание сотрудникам (Python-скрипт, демо по запросу) — вместо ручной сборки часами."
+        ],
+        obj: "Ищу позицию Junior DevOps / Automation: Linux, Bash, Docker, мониторинг, автоматизация рутины и CI/CD под наставничеством. К стеку не привязан, готов учиться. ЗП-ожидания: 200–300 тыс. ₸."
+      },
+      kz: {
+        subtitle: "Junior DevOps Engineer • Linux, Docker, Bash • CI/CD, Prometheus/Grafana",
+        summary: "Linux-әкімшіліктен өскен бастаушы DevOps. Bash-автоматтандыру, systemd, Docker/Compose, Prometheus/Grafana базасы. Кейс — kiosk-деплой: қолмен сағаттап → скриптпен ~30 минут (Debian орнатумен қоса). TCP/IP, DNS, SSH, лог оқу. Келесі қадам — нақты жобада CI/CD және IaC.",
+        skills: [
+          ['├─ ', 'Linux', ' Arch/Ubuntu/Debian, systemd, Bash, SSH'],
+          ['├─ ', 'Контейнерлер', ' Docker, Compose'],
+          ['├─ ', 'Мониторинг', ' Prometheus, Grafana (база)'],
+          ['├─ ', 'Желілер', ' TCP/IP, DNS, DHCP, HTTP(S)'],
+          ['└─ ', 'Тұжырымдар', ' CI/CD, автоматтандыру, IaC (база)']
+        ],
+        soft: ["Қайталанатын істі автоматтандырамын", "Логтан себеп табамын", "Қайталанатын нұсқаулық жазамын", "Деплойды «қайта қоссаң істейді» күйге жеткіземін"],
+        ai: [
+          "<span class='tar'>Деплой:</span> ИИ черновигі → қолмен тексеру → таза VM-де тест.",
+          "<span class='tar'>Логтар:</span> journalctl/docker logs талдауы — ~20 минут.",
+          "<span class='tar'>Бизнес-автоматтандыру мысалы:</span> бірнеше CSV → бір XLSX + еске салу (Python, демо сұраныс бойынша)."
+        ],
+        obj: "Junior DevOps / Automation іздеймін: Linux, Bash, Docker, мониторинг, CI/CD. Стекке байланбаймын, үйренуге дайынмын. Жалақы: 200–300 мың ₸."
+      },
+      en: {
+        subtitle: "Junior DevOps Engineer • Linux, Docker, Bash • CI/CD, Prometheus/Grafana",
+        summary: "Junior DevOps grown from Linux admin. Bash automation, systemd services, Docker/Compose, basic Prometheus/Grafana. Proof — kiosk deploy: from hours of manual setup to a ~30-min script (incl. Debian install) with crash recovery. Solid TCP/IP, DNS, SSH, log reading, runbooks. Next — CI/CD and IaC on a real project.",
+        skills: [
+          ['├─ ', 'Linux', ' Arch/Ubuntu/Debian, systemd, Bash, SSH, logs'],
+          ['├─ ', 'Containers', ' Docker, Compose'],
+          ['├─ ', 'Monitoring', ' Prometheus, Grafana (basic)'],
+          ['├─ ', 'Networking', ' TCP/IP, DNS, DHCP, HTTP(S)'],
+          ['└─ ', 'Concepts', ' CI/CD, automation, IaC (basic)']
+        ],
+        soft: ["Automate repeats instead of clicking", "Root-cause from logs", "Reproducible runbooks", "Ship deploys that survive reboot"],
+        ai: [
+          "<span class='tar'>Deploy scripts:</span> AI draft → manual review → clean-VM test — reusable kiosk scripts.",
+          "<span class='tar'>Logs/alerts:</span> journalctl/docker logs triage with AI — typical incident in ~20 min.",
+          "<span class='tar'>Business automation sample:</span> multi-CSV → single XLSX + staff reminders (Python script, demo on request) — instead of hours of manual merging."
+        ],
+        obj: "Seeking Junior DevOps / Automation: Linux, Bash, Docker, monitoring, routine automation and CI/CD with mentorship. Stack-flexible, eager to learn. Salary: 200–300k KZT."
+      }
+    },
+    developer: {
+      file: "Developer",
+      label: { ru: "Full-Stack Developer (C# / Angular / Flutter)", kz: "Full-Stack Developer (C# / Angular / Flutter)", en: "Full-Stack Developer (C# / Angular / Flutter)" },
+      ru: {
+        subtitle: "Full-Stack Developer • C# / ASP.NET • Angular • Flutter • PostgreSQL",
+        summary: "Full-stack разработчик: REST API на C#/ASP.NET, SPA на Angular, мобильные приложения на Flutter. Полный цикл — от схемы БД (PostgreSQL) до интерфейса и сборки. Плюс сильная база Linux/Bash: деплою свои приложения на свои же серверы, пишу скрипты установки. Часть заказных работ под NDA — детали и код покажу на собеседовании.",
+        skills: [
+          ['├─ ', 'Backend', ' C#, ASP.NET, Python, Rust, SQL'],
+          ['├─ ', 'Frontend', ' Angular (SPA)'],
+          ['├─ ', 'Mobile', ' Flutter'],
+          ['├─ ', 'БД/VCS', ' PostgreSQL, Git/GitHub'],
+          ['└─ ', 'Инфраструктура', ' Linux, Bash, Docker (деплой своих приложений)']
+        ],
+        soft: ["Довожу фичу до рабочего состояния", "Разбираю чужой код и чиню баги по логам", "Пишу понятные README и инструкции", "Оцениваю задачу и держу срок"],
+        ai: [
+          "<span class='tar'>Полный цикл:</span> могу вести разработку от проектирования структуры данных (таблицы, связи, API-контракт) до backend на ASP.NET, клиента на Flutter/Angular и деплоя на Linux — так сделаны доработки медСРМ и MVP.",
+          "<span class='tar'>Код:</span> черновики CRUD/форм через ИИ → ревью, тесты, правки вручную — типовой экран/эндпоинт за часы вместо дней.",
+          "<span class='tar'>Отладка и доки:</span> стектрейсы/логи + ИИ для гипотез, фикс всегда проверяю сам; README с командами запуска, без воды."
+        ],
+        obj: "Ищу позицию Junior Full-Stack / Backend (C#/.NET) или Flutter: API, интерфейсы, доведение фич до продакшена. К языку/стеку не привязан — готов учиться и набираться опыта. ЗП-ожидания: 200–300 тыс. ₸."
+      },
+      kz: {
+        subtitle: "Full-Stack Developer • C# / ASP.NET • Angular • Flutter • PostgreSQL",
+        summary: "Full-stack әзірлеуші: C#/ASP.NET REST API, Angular SPA, Flutter мобильді қосымшалар. Толық цикл — ДҚ сызбасынан интерфейске дейін. Linux/Bash базасы мықты: қосымшаларымды өз серверіме деплой жасаймын. Бір бөлігі NDA — кодты сұхбатта көрсетемін.",
+        skills: [
+          ['├─ ', 'Backend', ' C#, ASP.NET, Python, Rust, SQL'],
+          ['├─ ', 'Frontend', ' Angular (SPA)'],
+          ['├─ ', 'Mobile', ' Flutter'],
+          ['├─ ', 'ДҚ/VCS', ' PostgreSQL, Git/GitHub'],
+          ['└─ ', 'Инфра', ' Linux, Bash, Docker']
+        ],
+        soft: ["Фичаны жұмыс күйге жеткіземін", "Бөгде кодты оқып, логпен баг табамын", "Түсінікті README жазамын", "Мерзімді ұстаймын"],
+        ai: [
+          "<span class='tar'>Толық цикл:</span> деректер құрылымын жобалаудан (кестелер, байланыстар, API-келісім) ASP.NET backend, Flutter/Angular клиент және Linux деплойға дейін апара аламын — медСРМ мен MVP осылай жасалды.",
+          "<span class='tar'>Код:</span> CRUD/форма черновиктері ИИ арқылы → ревью қолмен; типтік экран/эндпоинт сағаттарда.",
+          "<span class='tar'>Дебаг және құжат:</span> стектрейс + ИИ гипотеза, фикс — өзім; іске қосу командалары бар README."
+        ],
+        obj: "Junior Full-Stack / Backend (C#/.NET) немесе Flutter іздеймін: API, интерфейс, продакшн. Стекке байланбаймын, үйренуге дайынмын. Жалақы: 200–300 мың ₸."
+      },
+      en: {
+        subtitle: "Full-Stack Developer • C# / ASP.NET • Angular • Flutter • PostgreSQL",
+        summary: "Full-stack developer: REST APIs in C#/ASP.NET, SPAs in Angular, mobile apps in Flutter. Full cycle — from DB schema (PostgreSQL) to UI and build. Plus solid Linux/Bash base: I deploy my own apps to my own servers. Some client work under NDA — code/details in interview.",
+        skills: [
+          ['├─ ', 'Backend', ' C#, ASP.NET, Python, Rust, SQL'],
+          ['├─ ', 'Frontend', ' Angular (SPA)'],
+          ['├─ ', 'Mobile', ' Flutter'],
+          ['├─ ', 'DB/VCS', ' PostgreSQL, Git/GitHub'],
+          ['└─ ', 'Infra', ' Linux, Bash, Docker (deploy my own apps)']
+        ],
+        soft: ["Ship features to working state", "Read others' code, fix by logs", "Write clear READMEs", "Estimate and hold deadlines"],
+        ai: [
+          "<span class='tar'>Full cycle:</span> can own development from data-structure design (tables, relations, API contract) to ASP.NET backend, Flutter/Angular client and Linux deploy — that's how the medical-CRM features and MVP were built.",
+          "<span class='tar'>Code:</span> AI-drafted CRUD/forms → review, tests, manual fixes — typical screen/endpoint in hours not days.",
+          "<span class='tar'>Debug & docs:</span> stacktraces/logs + AI hypotheses, fix always verified myself; READMEs with runnable commands, no fluff."
+        ],
+        obj: "Seeking Junior Full-Stack / Backend (C#/.NET) or Flutter: APIs, UIs, shipping features to production. Stack-flexible, eager to learn. Salary: 200–300k KZT."
+      }
+    }
+  };
+
+  const UI = {
+    ru: {
+      summaryH: "Профессиональное резюме", eduH: "Образование",
+      workH: "Опыт работы и практики", projectsH: "Свои проекты (вне работы)",
+      aiH: "ИИ и автоматизация — как использую", skillsH: "Технические навыки",
+      softH: "Как работаю", langH: "Языки", objH: "Цель",
+      hints: "[R] Роль &nbsp;│&nbsp; [L] Язык &nbsp;│&nbsp; [T] Тема &nbsp;│&nbsp; [Ctrl+P] Печать → PDF"
+    },
+    kz: {
+      summaryH: "Кәсіби түйіндеме", eduH: "Білім",
+      workH: "Жұмыс және тәжірибе", projectsH: "Өз жобаларым (жұмыстан тыс)",
+      aiH: "ИИ және автоматтандыру — қалай қолданамын", skillsH: "Техникалық дағдылар",
+      softH: "Жұмыс стилім", langH: "Тілдер", objH: "Мақсат",
+      hints: "[R] Рөл &nbsp;│&nbsp; [L] Тіл &nbsp;│&nbsp; [T] Тақырып &nbsp;│&nbsp; [Ctrl+P] Басып шығару → PDF"
+    },
+    en: {
+      summaryH: "Professional Summary", eduH: "Education",
+      workH: "Employment & Internships", projectsH: "Personal projects (outside work)",
+      aiH: "AI & automation — how I use it", skillsH: "Technical Skills",
+      softH: "How I work", langH: "Languages", objH: "Career Objective",
+      hints: "[R] Role &nbsp;│&nbsp; [L] Lang &nbsp;│&nbsp; [T] Theme &nbsp;│&nbsp; [Ctrl+P] Print → PDF"
+    }
+  };
+
+  const ROLE_ORDER = ['sysadmin', 'devops', 'developer'];
+  const LANGS = ['ru', 'kz', 'en'];
+  let currentRole = 'sysadmin';
   let currentLang = 'ru';
+
+  function fileName() {
+    const r = ROLES[currentRole].file;
+    const l = currentLang.toUpperCase();
+    return 'Iskakov_Amir_' + r + '_' + l;
+  }
 
   function renderSkills(skills) {
     const mid = Math.ceil(skills.length / 2);
     const left = skills.slice(0, mid);
     const right = skills.slice(mid);
-    return '<div class="skills-col">' + left.map(s =>
-      '<div class="skill-line"><span class="prefix">' + s[0] + '</span><span class="label">' + s[1] + '</span><span class="value">' + s[2] + '</span></div>'
-    ).join('') + '</div><div class="skills-col">' + right.map(s =>
-      '<div class="skill-line"><span class="prefix">' + s[0] + '</span><span class="label">' + s[1] + '</span><span class="value">' + s[2] + '</span></div>'
+    const col = arr => '<div class="skills-col">' + arr.map(s =>
+      '<div class="skill-line"><span class="prefix">' + s[0] + '</span><span class="label">' + s[1] + '</span><span class="value"> ' + s[2] + '</span></div>'
     ).join('') + '</div>';
+    return col(left) + col(right);
   }
 
-  function renderWork(work) {
-    return work.map(function(job) {
-      return '<div class="work-item">' +
+  function renderList(items, cls) {
+    return items.map(function(job) {
+      return '<div class="' + cls + '">' +
         '<div class="work-title">' + job.title + '</div>' +
+        '<div class="work-meta"><span class="period">' + job.period + '</span><span class="type">' + job.type + '</span></div>' +
         (job.tech ? '<div class="work-tech">' + job.tech + '</div>' : '') +
         '<ul>' + job.items.map(function(i) { return '<li>' + i + '</li>'; }).join('') + '</ul>' +
         '</div>';
     }).join('');
   }
 
-  function renderProjects(projects) {
-    return projects.map(function(p) {
-      return '<div class="project-item">' +
-        '<div class="work-title">' + p.title + '</div>' +
-        '<ul>' + p.items.map(function(i) { return '<li>' + i + '</li>'; }).join('') + '</ul>' +
-        '</div>';
-    }).join('');
+  function renderLang() {
+    const base = BASE[currentLang];
+    const role = ROLES[currentRole];
+    const r = role[currentLang];
+    const ui = UI[currentLang];
+    const names = { ru: "ИСКАКОВ АМИР", kz: "ИСКАКОВ АМИР", en: "ISKAKOV AMIR" };
+
+    document.getElementById('js-name').textContent = names[currentLang];
+    document.getElementById('js-role').textContent = role.label[currentLang];
+    document.getElementById('js-subtitle').textContent = r.subtitle;
+    document.getElementById('js-summary').textContent = r.summary;
+    document.getElementById('js-edu').innerHTML = base.edu;
+    document.getElementById('js-work').innerHTML = renderList(base.work, 'work-item');
+    document.getElementById('js-projects').innerHTML = renderList(base.projects, 'project-item');
+    document.getElementById('js-projects-note').textContent = base.projectsNote;
+    document.getElementById('js-ai').innerHTML =
+      '<div class="ai-item"><ul>' + r.ai.map(a => '<li>' + a + '</li>').join('') + '</ul></div>';
+    document.getElementById('js-skills').innerHTML = renderSkills(r.skills);
+    document.getElementById('js-summary-h').textContent = ui.summaryH;
+    document.getElementById('js-work-h').textContent = ui.workH;
+    document.getElementById('js-projects-h').textContent = ui.projectsH;
+    document.getElementById('js-edu-h').textContent = ui.eduH;
+    document.getElementById('js-ai-h').textContent = ui.aiH;
+    document.getElementById('js-skills-h').textContent = ui.skillsH;
+    document.getElementById('js-soft-h').textContent = ui.softH;
+    document.getElementById('js-soft').innerHTML = r.soft.map(s => '<li>' + s + '</li>').join('');
+    document.getElementById('js-lang-h').textContent = ui.langH;
+    document.getElementById('js-lang').innerHTML = base.langList.map(s => '<li>' + s + '</li>').join('');
+    document.getElementById('js-obj-h').textContent = ui.objH;
+    document.getElementById('js-obj').textContent = r.obj;
+    document.getElementById('js-hints').innerHTML = ui.hints;
+
+    // filename for PDF save: browsers use document.title
+    document.title = fileName();
+    document.documentElement.lang = currentLang;
+
+    // tabs
+    document.querySelectorAll('#roleTabs .role-tab').forEach(t =>
+      t.classList.toggle('active', t.dataset.role === currentRole));
+    document.querySelectorAll('#roleTabs [data-lang]').forEach(t =>
+      t.classList.toggle('active', t.dataset.lang === currentLang));
+
+    // deep link
+    const url = new URL(window.location.href);
+    url.searchParams.set('role', currentRole);
+    url.searchParams.set('lang', currentLang);
+    window.history.replaceState(null, '', url.toString());
+    try {
+      localStorage.setItem('cv-role', currentRole);
+      localStorage.setItem('cv-lang', currentLang);
+    } catch (e) {}
   }
 
-  function renderLang(lang) {
-    const d = data[lang];
-    document.getElementById('js-name').textContent = d.name;
-    document.getElementById('js-subtitle').textContent = d.subtitle;
-    document.getElementById('js-summary').textContent = d.summary;
-    document.getElementById('js-edu').innerHTML = d.edu;
-    document.getElementById('js-work').innerHTML = renderWork(d.work);
-    document.getElementById('js-projects').innerHTML = renderProjects(d.projects);
-    document.getElementById('js-skills').innerHTML = renderSkills(d.skills);
-    document.getElementById('js-summary-h').textContent = d.summaryH;
-    document.getElementById('js-work-h').textContent = d.workH;
-    document.getElementById('js-projects-h').textContent = d.projectsH;
-    document.getElementById('js-edu-h').textContent = d.eduH;
-    document.getElementById('js-skills-h').textContent = d.skillsH;
-    document.getElementById('js-soft-h').textContent = d.softH;
-    document.getElementById('js-soft').innerHTML = d.soft.map(s => '<li>' + s + '</li>').join('');
-    document.getElementById('js-lang-h').textContent = d.langH;
-    document.getElementById('js-lang').innerHTML = d.lang.map(s => '<li>' + s + '</li>').join('');
-    document.getElementById('js-obj-h').textContent = d.objH;
-    document.getElementById('js-obj').textContent = d.obj;
-    document.title = 'Amir Iskakov — CV (' + lang.toUpperCase() + ')';
+  function setRole(role) {
+    if (!ROLES[role]) return;
+    currentRole = role;
+    renderLang();
   }
 
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      this.classList.add('active');
-      currentLang = this.dataset.lang;
-      renderLang(currentLang);
-    });
+  function setLang(lang) {
+    if (!BASE[lang]) return;
+    currentLang = lang;
+    renderLang();
+  }
+
+  document.querySelectorAll('.role-tab').forEach(tab => {
+    tab.addEventListener('click', function() { setRole(this.dataset.role); });
+  });
+  document.querySelectorAll('[data-lang]').forEach(tab => {
+    tab.addEventListener('click', function() { setLang(this.dataset.lang); });
   });
 
   function toggleTheme() {
     const t = document.body;
-    const btn = document.getElementById('themeToggle');
     if (t.classList.contains('light')) {
       t.classList.remove('light');
       t.classList.add('dark');
-      btn.textContent = '~';
     } else {
       t.classList.remove('dark');
       t.classList.add('light');
-      btn.textContent = '~';
     }
   }
 
   document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+  document.getElementById('dlBtn').addEventListener('click', function() {
+    // Ensure title (= filename) is fresh, then print → Save as PDF
+    document.title = fileName();
+    window.print();
+  });
 
-  const mq = window.matchMedia('(prefers-color-scheme: light)');
-  if (mq.matches) {
-    document.body.classList.add('light');
-  }
-
-  renderLang('ru');
+  // init from URL ?role=&lang=, fallback to storage
+  (function init() {
+    try {
+      const q = new URLSearchParams(window.location.search);
+      const qr = q.get('role'), ql = q.get('lang');
+      if (qr && ROLES[qr]) currentRole = qr;
+      else {
+        const sr = localStorage.getItem('cv-role');
+        if (sr && ROLES[sr]) currentRole = sr;
+      }
+      if (ql && BASE[ql]) currentLang = ql;
+      else {
+        const sl = localStorage.getItem('cv-lang');
+        if (sl && BASE[sl]) currentLang = sl;
+      }
+    } catch (e) {}
+    const mq = window.matchMedia('(prefers-color-scheme: light)');
+    if (mq.matches) document.body.classList.add('light');
+    renderLang();
+  })();
 
   document.addEventListener('keydown', function(e) {
-    if (e.key === 't' || e.key === 'T') {
-      e.preventDefault();
-      toggleTheme();
+    if (e.key === 't' || e.key === 'T' || e.key === 'е' || e.key === 'Е') {
+      e.preventDefault(); toggleTheme();
     }
-    if (e.key === 'l' || e.key === 'L') {
+    if (e.key === 'l' || e.key === 'L' || e.key === 'д' || e.key === 'Д') {
       e.preventDefault();
-      const langs = ['ru', 'kz', 'en'];
-      const next = langs[(langs.indexOf(currentLang) + 1) % 3];
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelector('[data-lang="' + next + '"]').classList.add('active');
-      currentLang = next;
-      renderLang(next);
+      setLang(LANGS[(LANGS.indexOf(currentLang) + 1) % LANGS.length]);
+    }
+    if (e.key === 'r' || e.key === 'R' || e.key === 'к' || e.key === 'К') {
+      e.preventDefault();
+      setRole(ROLE_ORDER[(ROLE_ORDER.indexOf(currentRole) + 1) % ROLE_ORDER.length]);
     }
   });
 </script>
