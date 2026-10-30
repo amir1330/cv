@@ -26,7 +26,7 @@
     --tab-bg: #3c3836;
     --tab-hover: #504945;
     --tab-active: #504945;
-    --print-fs: 8.5pt;
+    --print-fs: 7.6pt;
   }
 
   @media (prefers-color-scheme: light) {
@@ -90,7 +90,7 @@
 
   @page {
     size: A4;
-    margin: 10mm;
+    margin: 8mm 9mm;
   }
 
   body {
@@ -412,6 +412,7 @@
       background: #ffffff;
       padding: 0;
       font-size: var(--print-fs);
+      line-height: 1.3;
     }
 
     .titlebar { display: none; }
@@ -421,33 +422,40 @@
     }
 
     header {
-      padding-bottom: 6px;
-      margin-bottom: 6px;
+      padding-bottom: 4px;
+      margin-bottom: 4px;
       border-bottom: 1px solid #999999;
     }
 
-    h1 { font-size: 15pt; }
-    .subtitle { font-size: 7.5pt; }
-    .contact { font-size: 7pt; }
-    .section { margin-top: 6px; }
-    .section-header { font-size: 8pt; }
+    h1 { font-size: 14pt; margin: 0; }
+    .subtitle { font-size: 7pt; margin-bottom: 2px; }
+    .contact { font-size: 6.5pt; }
+    .section { margin-top: 4px; }
+    .section-header { font-size: 7.5pt; }
     .section-header::before { content: ""; }
     .section-header::after { content: ""; }
-    .section-header { color: #000000; }
-    .section p { font-size: var(--print-fs); margin: 0 0 4px 0; }
-    .skill-line { font-size: var(--print-fs); margin-bottom: 3px; }
+    .section-header { color: #000000; margin: 0 0 2px 0; }
+    .section p { font-size: var(--print-fs); margin: 0 0 3px 0; }
+    .skill-line { font-size: var(--print-fs); margin-bottom: 2px; line-height: 1.25; }
     .skill-line .prefix { color: #000000; }
-    .two-col ul { font-size: var(--print-fs); }
-    .two-col h3 { font-size: var(--print-fs); color: #000000; }
-    .work-item ul, .project-item ul, .ai-item ul { font-size: var(--print-fs); }
-    .work-title { font-size: var(--print-fs); }
-    .work-tech, .work-meta { font-size: 7pt; }
-    .role-badge { color: #000; border-color: #999; }
+    .two-col { gap: 6px; }
+    .two-col ul { font-size: var(--print-fs); padding-left: 12px; }
+    .two-col li { margin-bottom: 0; }
+    .two-col h3 { font-size: var(--print-fs); color: #000000; margin: 0 0 2px 0; }
+    .work-item, .project-item, .ai-item { margin-bottom: 3px; }
+    .work-item ul, .project-item ul, .ai-item ul { font-size: var(--print-fs); padding-left: 12px; }
+    .work-item li, .project-item li, .ai-item li { margin-bottom: 0; }
+    .work-title { font-size: var(--print-fs); margin-bottom: 0; }
+    .work-tech, .work-meta { font-size: 6.8pt; margin-bottom: 1px; }
+    .role-badge { color: #000; border-color: #999; font-size: 7pt; padding: 0 6px; margin-bottom: 3px; }
+    .note { font-size: 6.5pt; margin: 2px 0 2px 0; padding-left: 6px; }
 
     .hints { display: none; }
 
-    .section { page-break-inside: avoid; }
     header { page-break-after: avoid; }
+    /* allow sections to split if needed so nothing spills to page 2 */
+    .section { page-break-inside: auto; }
+    .work-item, .project-item { page-break-inside: avoid; }
   }
 
   .hints {
@@ -591,7 +599,7 @@
         {
           title: "МедСРМ и MVP-приложение — ASP.NET + Flutter",
           period: "2026",
-          type: "Практика / Заказ",
+          type: "Стажировка",
           tech: "C# · ASP.NET · Flutter · PostgreSQL · Angular",
           items: [
             "<span class='tar'>Задача:</span> добавить функционал в их медСРМ-систему и с нуля спроектировать MVP-приложение.",
@@ -655,7 +663,7 @@
         {
           title: "МедСРМ және MVP-қосымша — ASP.NET + Flutter",
           period: "2026",
-          type: "Тәжірибе / Тапсырыс",
+          type: "Тәжірибе",
           tech: "C# · ASP.NET · Flutter · PostgreSQL · Angular",
           items: [
             "<span class='tar'>Міндет:</span> олардың медСРМ жүйесіне функционал қосу және нөлден MVP-қосымша жобалау.",
@@ -719,7 +727,7 @@
         {
           title: "Medical CRM features + MVP app — ASP.NET + Flutter",
           period: "2026",
-          type: "Internship / Contract",
+          type: "Internship",
           tech: "C# · ASP.NET · Flutter · PostgreSQL · Angular",
           items: [
             "<span class='tar'>Task:</span> add features to their medical CRM system and design an MVP app from scratch.",
@@ -751,7 +759,7 @@
       label: { ru: "Linux System Administrator", kz: "Linux System Administrator", en: "Linux System Administrator" },
       ru: {
         subtitle: "Linux System Administrator • Arch / Ubuntu / Fedora / Debian • Bash, systemd, AD",
-        summary: "Системный администратор Linux. Практика в NROC (Астана): ~50 рабочих мест, Active Directory, принтеры, сборка и поддержка ПК. Заказ — kiosk-система на Debian/Sway: Bash-автоустановка за ~30 минут (включая установку Debian), systemd-самовосстановление, вырезанное DE. Ежедневно работаю в Linux, читаю логи (journalctl), автоматизирую рутину скриптами.",
+        summary: "Системный администратор Linux. Практика в NROC (Астана): ~50 рабочих мест, AD, принтеры, сборка ПК. Заказ — kiosk на Debian/Sway: автоустановка за ~30 минут (с установкой Debian), systemd-самовосстановление. Ежедневно в Linux, читаю journalctl, автоматизирую рутину скриптами.",
         skills: [
           ['├─ ', 'Linux', ' Arch, Ubuntu, Fedora, Debian, systemd, journalctl'],
           ['├─ ', 'Администрирование', ' AD, пользователи/GPO, принтеры, поддержка ПК'],
@@ -809,7 +817,7 @@
       label: { ru: "Junior DevOps Engineer", kz: "Junior DevOps Engineer", en: "Junior DevOps Engineer" },
       ru: {
         subtitle: "Junior DevOps Engineer • Linux, Docker, Bash • CI/CD, Prometheus/Grafana",
-        summary: "Начинающий DevOps на базе Linux-администрирования. Умею: Bash-автоматизация, systemd-сервисы, Docker/Compose, базовый мониторинг Prometheus/Grafana. Кейс — kiosk-деплой: было — ручная настройка часами, стало — скрипт за ~30 минут (включая установку Debian) с восстановлением после сбоев. Понимаю TCP/IP, DNS, SSH, читаю логи, пишу runbook'и. Следующий шаг — CI/CD и IaC на реальном проекте.",
+        summary: "Начинающий DevOps на базе Linux-администрирования: Bash, systemd, Docker/Compose, Prometheus/Grafana (база). Кейс — kiosk-деплой: вместо часов ручной настройки — скрипт за ~30 минут (с установкой Debian) и восстановлением после сбоев. TCP/IP, DNS, SSH, логи, runbook'и. Далее — CI/CD и IaC на реальном проекте.",
         skills: [
           ['├─ ', 'Linux', ' Arch/Ubuntu/Debian, systemd, Bash, SSH, логи'],
           ['├─ ', 'Контейнеры', ' Docker, Compose'],
@@ -867,9 +875,9 @@
       label: { ru: "Full-Stack Developer (C# / Angular / Flutter)", kz: "Full-Stack Developer (C# / Angular / Flutter)", en: "Full-Stack Developer (C# / Angular / Flutter)" },
       ru: {
         subtitle: "Full-Stack Developer • C# / ASP.NET • Angular • Flutter • PostgreSQL",
-        summary: "Full-stack разработчик: REST API на C#/ASP.NET, SPA на Angular, мобильные приложения на Flutter. Полный цикл — от схемы БД (PostgreSQL) до интерфейса и сборки. Плюс сильная база Linux/Bash: деплою свои приложения на свои же серверы, пишу скрипты установки. Часть заказных работ под NDA — детали и код покажу на собеседовании.",
+        summary: "Full-stack: REST API на C#/ASP.NET (+PHP), SPA на Angular, приложения на Flutter. Полный цикл — от схемы PostgreSQL до интерфейса и деплоя на Linux (Bash/Docker). Часть работ под NDA — код покажу на собеседовании.",
         skills: [
-          ['├─ ', 'Backend', ' C#, ASP.NET, Python, Rust, SQL'],
+          ['├─ ', 'Backend', ' C#, ASP.NET, PHP, Python, SQL'],
           ['├─ ', 'Frontend', ' Angular (SPA)'],
           ['├─ ', 'Mobile', ' Flutter'],
           ['├─ ', 'БД/VCS', ' PostgreSQL, Git/GitHub'],
@@ -877,17 +885,17 @@
         ],
         soft: ["Довожу фичу до рабочего состояния", "Разбираю чужой код и чиню баги по логам", "Пишу понятные README и инструкции", "Оцениваю задачу и держу срок"],
         ai: [
-          "<span class='tar'>Полный цикл:</span> могу вести разработку от проектирования структуры данных (таблицы, связи, API-контракт) до backend на ASP.NET, клиента на Flutter/Angular и деплоя на Linux — так сделаны доработки медСРМ и MVP.",
-          "<span class='tar'>Код:</span> черновики CRUD/форм через ИИ → ревью, тесты, правки вручную — типовой экран/эндпоинт за часы вместо дней.",
-          "<span class='tar'>Отладка и доки:</span> стектрейсы/логи + ИИ для гипотез, фикс всегда проверяю сам; README с командами запуска, без воды."
+          "<span class='tar'>Полный цикл:</span> БД/API-контракт → ASP.NET backend → Flutter/Angular клиент → деплой на Linux (так сделаны медСРМ и MVP).",
+          "<span class='tar'>Код:</span> черновики CRUD/форм через ИИ → ревью и правки вручную — типовой экран/эндпоинт за часы вместо дней.",
+          "<span class='tar'>Отладка и доки:</span> стектрейсы/логи + ИИ для гипотез, фикс проверяю сам; README с командами запуска, без воды."
         ],
         obj: "Ищу позицию Junior Full-Stack / Backend (C#/.NET) или Flutter: API, интерфейсы, доведение фич до продакшена. К языку/стеку не привязан — готов учиться и набираться опыта. ЗП-ожидания: 200–300 тыс. ₸."
       },
       kz: {
         subtitle: "Full-Stack Developer • C# / ASP.NET • Angular • Flutter • PostgreSQL",
-        summary: "Full-stack әзірлеуші: C#/ASP.NET REST API, Angular SPA, Flutter мобильді қосымшалар. Толық цикл — ДҚ сызбасынан интерфейске дейін. Linux/Bash базасы мықты: қосымшаларымды өз серверіме деплой жасаймын. Бір бөлігі NDA — кодты сұхбатта көрсетемін.",
+        summary: "Full-stack: C#/ASP.NET (+PHP) REST API, Angular SPA, Flutter қосымшалар. Толық цикл — PostgreSQL сызбасынан Linux деплойға дейін (Bash/Docker). Бір бөлігі NDA — кодты сұхбатта көрсетемін.",
         skills: [
-          ['├─ ', 'Backend', ' C#, ASP.NET, Python, Rust, SQL'],
+          ['├─ ', 'Backend', ' C#, ASP.NET, PHP, Python, SQL'],
           ['├─ ', 'Frontend', ' Angular (SPA)'],
           ['├─ ', 'Mobile', ' Flutter'],
           ['├─ ', 'ДҚ/VCS', ' PostgreSQL, Git/GitHub'],
@@ -895,7 +903,7 @@
         ],
         soft: ["Фичаны жұмыс күйге жеткіземін", "Бөгде кодты оқып, логпен баг табамын", "Түсінікті README жазамын", "Мерзімді ұстаймын"],
         ai: [
-          "<span class='tar'>Толық цикл:</span> деректер құрылымын жобалаудан (кестелер, байланыстар, API-келісім) ASP.NET backend, Flutter/Angular клиент және Linux деплойға дейін апара аламын — медСРМ мен MVP осылай жасалды.",
+          "<span class='tar'>Толық цикл:</span> ДҚ/API-келісім → ASP.NET backend → Flutter/Angular клиент → Linux деплой (медСРМ мен MVP осылай жасалды).",
           "<span class='tar'>Код:</span> CRUD/форма черновиктері ИИ арқылы → ревью қолмен; типтік экран/эндпоинт сағаттарда.",
           "<span class='tar'>Дебаг және құжат:</span> стектрейс + ИИ гипотеза, фикс — өзім; іске қосу командалары бар README."
         ],
@@ -903,9 +911,9 @@
       },
       en: {
         subtitle: "Full-Stack Developer • C# / ASP.NET • Angular • Flutter • PostgreSQL",
-        summary: "Full-stack developer: REST APIs in C#/ASP.NET, SPAs in Angular, mobile apps in Flutter. Full cycle — from DB schema (PostgreSQL) to UI and build. Plus solid Linux/Bash base: I deploy my own apps to my own servers. Some client work under NDA — code/details in interview.",
+        summary: "Full-stack: REST APIs in C#/ASP.NET (+PHP), SPAs in Angular, mobile in Flutter. Full cycle — from PostgreSQL schema to Linux deploy (Bash/Docker). Some work under NDA — code in interview.",
         skills: [
-          ['├─ ', 'Backend', ' C#, ASP.NET, Python, Rust, SQL'],
+          ['├─ ', 'Backend', ' C#, ASP.NET, PHP, Python, SQL'],
           ['├─ ', 'Frontend', ' Angular (SPA)'],
           ['├─ ', 'Mobile', ' Flutter'],
           ['├─ ', 'DB/VCS', ' PostgreSQL, Git/GitHub'],
@@ -913,9 +921,9 @@
         ],
         soft: ["Ship features to working state", "Read others' code, fix by logs", "Write clear READMEs", "Estimate and hold deadlines"],
         ai: [
-          "<span class='tar'>Full cycle:</span> can own development from data-structure design (tables, relations, API contract) to ASP.NET backend, Flutter/Angular client and Linux deploy — that's how the medical-CRM features and MVP were built.",
-          "<span class='tar'>Code:</span> AI-drafted CRUD/forms → review, tests, manual fixes — typical screen/endpoint in hours not days.",
-          "<span class='tar'>Debug & docs:</span> stacktraces/logs + AI hypotheses, fix always verified myself; READMEs with runnable commands, no fluff."
+          "<span class='tar'>Full cycle:</span> DB/API contract → ASP.NET backend → Flutter/Angular client → Linux deploy (how medical-CRM features and MVP were built).",
+          "<span class='tar'>Code:</span> AI-drafted CRUD/forms → review and manual fixes — typical screen/endpoint in hours not days.",
+          "<span class='tar'>Debug & docs:</span> stacktraces/logs + AI hypotheses, fix verified myself; READMEs with runnable commands, no fluff."
         ],
         obj: "Seeking Junior Full-Stack / Backend (C#/.NET) or Flutter: APIs, UIs, shipping features to production. Stack-flexible, eager to learn. Salary: 200–300k KZT."
       }
