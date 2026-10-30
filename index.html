@@ -780,8 +780,7 @@
       type: "Свой проект",
       tech: "C · MCU",
       items: [
-        "Собираю устройства на микроконтроллерах, подключаю периферию.",
-        "Результат: 2+ рабочих устройства."
+        "Собираю устройства на микроконтроллерах, подключаю периферию."
       ]
     },
     {
@@ -940,8 +939,9 @@
       file: "Developer",
       label: { ru: "Full-Stack Developer (C# / PHP / Java / Python)", kz: "Full-Stack Developer (C# / PHP / Java / Python)", en: "Full-Stack Developer (C# / PHP / Java / Python)" },
       ru: {
-        subtitle: "Full-Stack Developer • опыт - 1 год • C# / PHP / Java / Python • Angular • Flutter • PostgreSQL",
+        subtitle: "Full-Stack Developer • C# / PHP / Java / Python • Angular • Flutter • PostgreSQL",
         summary: "Full-stack разработчик: backend C#/ASP.NET, PHP, Java/Python; SPA на Angular, приложения на Flutter. Полный цикл - от схемы PostgreSQL до интерфейса и деплоя на Linux (Bash, Docker).",
+        workH: "Опыт разработки - 1 год",
         edu: '<strong>Astana IT University</strong> - бакалавр, Software Engineering, 2023-2026.',
         exp: [
           {
@@ -1095,7 +1095,7 @@
       '<div class="ai-item"><ul>' + r.ai.map(a => '<li>' + a + '</li>').join('') + '</ul></div>';
     document.getElementById('js-skills').innerHTML = renderSkills(r.skills);
     document.getElementById('js-summary-h').textContent = ui.summaryH;
-    document.getElementById('js-work-h').textContent = ui.workH;
+    document.getElementById('js-work-h').textContent = r.workH || ui.workH;
     document.getElementById('js-projects-h').textContent = ui.projectsH;
     document.getElementById('js-edu-h').textContent = ui.eduH;
     document.getElementById('js-ai-h').textContent = ui.aiH;
