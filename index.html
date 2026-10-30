@@ -458,7 +458,7 @@
     .work-item, .project-item { page-break-inside: avoid; }
 
     /* developer RU: readable print - 10pt min, 12mm effective margins (8mm @page + 4mm padding) */
-    body[data-role="developer"][data-lang="ru"] { --print-fs: 10pt; }
+    body[data-role="developer"][data-lang="ru"] { --print-fs: 11pt; }
     body[data-role="developer"][data-lang="ru"] .screen { padding: 4mm; }
     body[data-role="developer"][data-lang="ru"] header { padding-bottom: 6px; margin-bottom: 6px; }
     body[data-role="developer"][data-lang="ru"] h1 { font-size: 18pt; }
@@ -772,18 +772,30 @@
     }
   };
 
-  // ---------- Developer-only: keyboards project replaced by short MCU item ----------
-  const DEV_MCU = {
-    ru: {
-      title: "Микроконтроллеры - pet-проекты",
+  // ---------- Developer RU projects: microcontrollers + contract websites ----------
+  const DEV_RU_PROJECTS = [
+    {
+      title: "Работа с микроконтроллерами",
       period: "2025",
       type: "Свой проект",
-      tech: "C · QMK/ZMK · MCU",
+      tech: "C · MCU",
       items: [
-        "<span class='tar'>Что делал:</span> прошивки на C/QMK/ZMK, работа с периферией микроконтроллеров.",
-        "<span class='tar'>Результат:</span> 2+ рабочих устройства, полный цикл прошивка-настройка."
+        "Собираю устройства на микроконтроллерах, подключаю периферию.",
+        "Результат: 2+ рабочих устройства."
       ]
     },
+    {
+      title: "Сайты на заказ",
+      period: "",
+      type: "Заказ",
+      items: [
+        "Разрабатываю и запускаю сайты на заказ."
+      ]
+    }
+  ];
+
+  // ---------- Developer-only (KZ/EN keep MCU swap until user approves): keyboards project replaced ----------
+  const DEV_MCU = {
     kz: {
       title: "Микроконтроллерлер - pet-жобалар",
       period: "2025",
@@ -935,7 +947,7 @@
           {
             title: "МедСРМ и MVP-приложение - разработка backend и клиента",
             period: "2026",
-            type: "Стажировка",
+            type: "Работа",
             tech: "C# · ASP.NET · Flutter · PostgreSQL · Angular",
             items: [
               "Спроектировал схему PostgreSQL и API-контракт для медСРМ и MVP-приложения.",
@@ -1062,7 +1074,7 @@
     const ui = UI[currentLang];
     const isDevRu = (currentRole === 'developer' && currentLang === 'ru');
     // developer RU: own experience + education, MCU as the only project (kiosk/medcrm stay in BASE for other roles)
-    const projects = isDevRu ? [DEV_MCU.ru]
+    const projects = isDevRu ? DEV_RU_PROJECTS
       : (currentRole === 'developer')
         ? base.projects.slice(0, 2).concat(DEV_MCU[currentLang])
         : base.projects;
