@@ -456,6 +456,26 @@
     /* allow sections to split if needed so nothing spills to page 2 */
     .section { page-break-inside: auto; }
     .work-item, .project-item { page-break-inside: avoid; }
+
+    /* developer RU: readable print - 10pt min, 12mm effective margins (8mm @page + 4mm padding) */
+    body[data-role="developer"][data-lang="ru"] { --print-fs: 10pt; }
+    body[data-role="developer"][data-lang="ru"] .screen { padding: 4mm; }
+    body[data-role="developer"][data-lang="ru"] header { padding-bottom: 6px; margin-bottom: 6px; }
+    body[data-role="developer"][data-lang="ru"] h1 { font-size: 18pt; }
+    body[data-role="developer"][data-lang="ru"] .subtitle { font-size: 10pt; margin-bottom: 3px; }
+    body[data-role="developer"][data-lang="ru"] .role-badge { font-size: 10pt; padding: 1px 8px; margin-bottom: 4px; }
+    body[data-role="developer"][data-lang="ru"] .contact { font-size: 10pt; }
+    body[data-role="developer"][data-lang="ru"] .section { margin-top: 8px; }
+    body[data-role="developer"][data-lang="ru"] .section-header { font-size: 11pt; margin: 0 0 4px 0; }
+    body[data-role="developer"][data-lang="ru"] .section p { margin: 0 0 4px 0; }
+    body[data-role="developer"][data-lang="ru"] .skill-line { margin-bottom: 3px; line-height: 1.35; }
+    body[data-role="developer"][data-lang="ru"] .work-item,
+    body[data-role="developer"][data-lang="ru"] .project-item { margin-bottom: 5px; }
+    body[data-role="developer"][data-lang="ru"] .work-title { margin-bottom: 2px; }
+    body[data-role="developer"][data-lang="ru"] .work-meta,
+    body[data-role="developer"][data-lang="ru"] .work-tech { font-size: 10pt; margin-bottom: 2px; }
+    body[data-role="developer"][data-lang="ru"] .work-item li,
+    body[data-role="developer"][data-lang="ru"] .project-item li { margin-bottom: 2px; }
   }
 
   .hints {
@@ -909,13 +929,28 @@
       label: { ru: "Full-Stack Developer (C# / PHP / Java / Python)", kz: "Full-Stack Developer (C# / PHP / Java / Python)", en: "Full-Stack Developer (C# / PHP / Java / Python)" },
       ru: {
         subtitle: "Full-Stack Developer • C# / PHP / Java / Python • Angular • Flutter • PostgreSQL",
-        summary: "Full-stack: backend на C#/ASP.NET, PHP, Java/Python, SPA на Angular, приложения на Flutter. Полный цикл - от схемы PostgreSQL до интерфейса и деплоя на Linux (Bash/Docker). Часть работ под NDA - код покажу на собеседовании.",
+        summary: "Full-stack разработчик: backend C#/ASP.NET, PHP, Java/Python; SPA на Angular, приложения на Flutter. Полный цикл - от схемы PostgreSQL до интерфейса и деплоя на Linux (Bash, Docker).",
+        edu: '<strong>Astana IT University</strong> - бакалавр, Software Engineering, 2023-2026.',
+        exp: [
+          {
+            title: "МедСРМ и MVP-приложение - разработка backend и клиента",
+            period: "2026",
+            type: "Стажировка",
+            tech: "C# · ASP.NET · Flutter · PostgreSQL · Angular",
+            items: [
+              "Спроектировал схему PostgreSQL и API-контракт для медСРМ и MVP-приложения.",
+              "Реализовал backend на ASP.NET (C#, около года): CRUD и авторизацию.",
+              "Собрал клиент на Flutter и веб-часть на Angular.",
+              "Внедрил новый функционал в медСРМ; MVP собрал от схемы БД до интерфейса."
+            ]
+          }
+        ],
         skills: [
-          ['├─ ', 'Backend', ' C#, ASP.NET, Java, PHP, Python, SQL'],
-          ['├─ ', 'Frontend', ' Angular (SPA)'],
-          ['├─ ', 'Mobile', ' Flutter'],
-          ['├─ ', 'БД/VCS', ' PostgreSQL, Git/GitHub'],
-          ['└─ ', 'Инфраструктура', ' Linux, Bash, Docker (деплой своих приложений)']
+          ['├─ ', 'Languages', ' C#, Java, PHP, Python, SQL'],
+          ['├─ ', 'Backend', ' ASP.NET, REST API, PostgreSQL'],
+          ['├─ ', 'Frontend', ' Angular (SPA), Flutter'],
+          ['├─ ', 'Infra & DevOps', ' Linux, Bash, Docker'],
+          ['└─ ', 'Tools', ' Git, GitHub']
         ],
         soft: ["Довожу фичу до рабочего состояния", "Разбираю чужой код и чиню баги по логам", "Пишу понятные README и инструкции", "Оцениваю задачу и держу срок"],
         ai: [
@@ -1025,18 +1060,23 @@
     const role = ROLES[currentRole];
     const r = role[currentLang];
     const ui = UI[currentLang];
-    // developer sees MCU item instead of the keyboards project
-    const projects = (currentRole === 'developer')
-      ? base.projects.slice(0, 2).concat(DEV_MCU[currentLang])
-      : base.projects;
+    const isDevRu = (currentRole === 'developer' && currentLang === 'ru');
+    // developer RU: own experience + education, MCU as the only project (kiosk/medcrm stay in BASE for other roles)
+    const projects = isDevRu ? [DEV_MCU.ru]
+      : (currentRole === 'developer')
+        ? base.projects.slice(0, 2).concat(DEV_MCU[currentLang])
+        : base.projects;
     const names = { ru: "ИСКАКОВ АМИР", kz: "ИСКАКОВ АМИР", en: "ISKAKOV AMIR" };
+
+    document.body.dataset.role = currentRole;
+    document.body.dataset.lang = currentLang;
 
     document.getElementById('js-name').textContent = names[currentLang];
     document.getElementById('js-role').textContent = role.label[currentLang];
     document.getElementById('js-subtitle').textContent = r.subtitle;
     document.getElementById('js-summary').textContent = r.summary;
-    document.getElementById('js-edu').innerHTML = base.edu;
-    document.getElementById('js-work').innerHTML = renderList(base.work, 'work-item');
+    document.getElementById('js-edu').innerHTML = r.edu || base.edu;
+    document.getElementById('js-work').innerHTML = renderList(r.exp || base.work, 'work-item');
     document.getElementById('js-projects').innerHTML = renderList(projects, 'project-item');
     document.getElementById('js-projects-note').textContent = base.projectsNote;
     document.getElementById('js-ai').innerHTML =
@@ -1055,6 +1095,23 @@
     document.getElementById('js-obj-h').textContent = ui.objH;
     document.getElementById('js-obj').textContent = r.obj;
     document.getElementById('js-hints').innerHTML = ui.hints;
+
+    // section order + visibility: developer RU uses Header → Summary → Skills → Experience → Projects → Education,
+    // everything else keeps the original order
+    const screen = document.querySelector('.screen');
+    const hintsEl = document.getElementById('js-hints');
+    const secByH = h => document.getElementById(h).closest('.section');
+    const defaultOrder = ['js-summary-h', 'js-edu-h', 'js-work-h', 'js-projects-h', 'js-ai-h', 'js-skills-h', 'js-soft-h', 'js-obj-h'];
+    defaultOrder.forEach(h => { secByH(h).style.display = ''; });
+    document.getElementById('js-projects-note').style.display = '';
+    const order = isDevRu
+      ? ['js-summary-h', 'js-skills-h', 'js-work-h', 'js-projects-h', 'js-edu-h']
+      : defaultOrder;
+    order.forEach(h => { screen.insertBefore(secByH(h), hintsEl); });
+    if (isDevRu) {
+      ['js-ai-h', 'js-soft-h', 'js-obj-h'].forEach(h => { secByH(h).style.display = 'none'; });
+      document.getElementById('js-projects-note').style.display = 'none';
+    }
 
     // filename for PDF save: browsers use document.title
     document.title = fileName();
